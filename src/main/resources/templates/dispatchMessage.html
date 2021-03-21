@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
+    <link href="https://fonts.googleapis.com/css?family=Poppins&display=swap" rel="stylesheet" />
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link rel="icon" href="/Files/favicon.ico" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
+
+    <title>BoilerPlate</title>
+
+    <style>
+        @import url(https://fonts.googleapis.com/css?family=Poppins&display=swap);
+
+        body {
+            margin: 0;
+            font-size: 0.9rem;
+            font-weight: 400;
+            line-height: 1.6;
+            color: #212529;
+            text-align: left;
+            background-color: #f5f8fa;
+        }
+
+        .navbar-laravel {
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+        }
+
+        .navbar-brand,
+        .nav-link,
+        .my-form,
+        .login-form {
+            font-family: "Poppins", sans-serif;
+        }
+
+        .my-form {
+            padding-top: 1.5rem;
+            padding-bottom: 1.5rem;
+        }
+
+        .my-form .row {
+            margin-left: 0;
+            margin-right: 0;
+        }
+
+        .login-form {
+            padding-top: 1.5rem;
+            padding-bottom: 1.5rem;
+        }
+
+        .login-form .row {
+            margin-left: 0;
+            margin-right: 0;
+        }
+
+        .btn-primary {
+            color: #fff;
+            background-color: #204275;
+            border-color: #204275;
+        }
+
+        .card-header {
+            background-color: #204275;
+            color: #ffffff;
+        }
+
+        .custom {
+            width: 100% !important;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <main class="login-form">
+            <div class="cotainer">
+                <div class="row justify-content-center">
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header" style="background-color: #ED1C24;">BoilerPlate</div>
+                            <div class="card-body">
+                                <form action="" method="post" th:action="@{/ssss}" th:object="${messageClass}">
+                                    <div class="form-group row topups">
+                                        <label id="message" class="col-form-label text-md-center" th:text="${message}"> An Error</label>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+<script>
+
+</script>
+
+</html>
