@@ -1,4 +1,4 @@
-package com.disl.boilerplate.security;
+package com.disl.boilerplate.exceptions;
 
 import java.io.IOException;
 
