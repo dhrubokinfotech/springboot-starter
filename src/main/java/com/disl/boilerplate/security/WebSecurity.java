@@ -21,10 +21,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import com.disl.boilerplate.constants.SecurityConstants;
 import com.disl.boilerplate.exceptions.AuthenticationExceptionHandler;
 
-
-
 @Configuration
-@EnableWebSecurity
 @EnableWebMvc
 public class WebSecurity extends WebSecurityConfigurerAdapter {
 

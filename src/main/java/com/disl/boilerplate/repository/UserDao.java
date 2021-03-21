@@ -15,6 +15,5 @@ public interface UserDao extends JpaRepository<User, Long>, JpaSpecificationExec
 	Optional<User> findByPasswordResetToken (String token);
 	List<User> findByRoles(Role role);
 	List<User> findByRolesIn(Role[] roles);
-	List<User> findByRolesAndUserNameNotNull(Role role);
 	
 }

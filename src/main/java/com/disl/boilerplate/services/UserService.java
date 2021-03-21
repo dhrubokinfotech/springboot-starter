@@ -61,8 +61,5 @@ public class UserService {
 		return userDao.findByRolesIn(roles);
 	} 
 	
-	public List<User> getAllUsersByRoleTypeAndUserNameNotNull (Role role) {
-		return userDao.findByRolesAndUserNameNotNull(role);
-	} 
 	
 }
