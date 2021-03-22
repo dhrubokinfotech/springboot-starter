@@ -16,7 +16,7 @@ public class AppTables {
 	}
 
 	public static final class roleTable {
-		public static final String roleId = "ROLE_ID";
+		public static final String roleId = "ID";
 		public static final String roleName = "ROLE_NAME";
 	}
 

@@ -13,7 +13,7 @@ public class AppConstants {
 	public static String logfilePath () {
 		switch (activeProfile) {
 			case development:
-				return "/home/user/Desktop/";
+				return "/Users/hafiz/Desktop/SpringAuth/Logs";
 			case staging:
 				return "/home/ubuntu/logfiles/";
 			case production:
