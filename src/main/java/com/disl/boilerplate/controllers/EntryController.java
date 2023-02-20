@@ -1,28 +1,5 @@
 package com.disl.boilerplate.controllers;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
-import java.util.UUID;
-import java.util.Map.Entry;
-
-import javax.servlet.http.HttpServletRequest;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
 import com.disl.boilerplate.config.AppProperties;
 import com.disl.boilerplate.constants.AppConstants;
 import com.disl.boilerplate.constants.AppUtils;
@@ -39,18 +16,34 @@ import com.disl.boilerplate.security.CustomUserDetailsService;
 import com.disl.boilerplate.security.JwtTokenProvider;
 import com.disl.boilerplate.services.MailService;
 import com.disl.boilerplate.services.UserService;
-
-import io.jsonwebtoken.impl.DefaultClaims;
+import io.jsonwebtoken.Claims;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.annotations.Authorization;
+import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
-
+import java.util.*;
+import java.util.Map.Entry;
 
 @RestController
 public class EntryController {
-	private final PasswordEncoder passwordEncoder;
+
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 
 	@Autowired
 	RoleDao roleDao;
@@ -72,11 +65,7 @@ public class EntryController {
     
     @Autowired
     AppProperties appProperties;
-    
-	public EntryController(PasswordEncoder passwordEncoder) {
-		this.passwordEncoder = passwordEncoder;
-	}
-	
+
 	@ApiOperation(value = "Sign-in")
 	@ApiResponses(value = {@ApiResponse(code = 200, message = "Success", response = TokenResponse.class),
 	@ApiResponse(code = 401, message = "Unauthorized"),
@@ -88,12 +77,12 @@ public class EntryController {
 		User user = loginService.findByEmail(loginRequest.getEmail());
 		if (user == null) {
 			return new Response(HttpStatus.FORBIDDEN, false, "No user found with this email", null);
-		} 
-				
+		}
+
         Authentication authentication = authenticationManager.authenticate(
            new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword())
         );
-                        
+
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = tokenProvider.generateToken(authentication);
         if (jwt == null) {
@@ -111,9 +100,10 @@ public class EntryController {
 		if (ifUserExists != null) {
 			return new Response(HttpStatus.BAD_REQUEST, false, "User with this email exists already. Please signin or try with different email", null);
 		}
-		
-		if (!AppUtils.checkIfPasswordValid(signUpRequest.getPassword()).isValid()) {
-			return new Response(HttpStatus.BAD_REQUEST, false, "Password does not match requirements. Password must contain at least one digit and a special character (!@#$%& etc.) with 8 characters long", null);
+
+		String invalidPasswordMessage = AppUtils.getInvalidPasswordMessage(signUpRequest.getPassword());
+		if (invalidPasswordMessage != null) {
+			return new Response(HttpStatus.BAD_REQUEST, false, invalidPasswordMessage, null);
 		}
 		
     	User signedUser = new User();
@@ -148,12 +138,14 @@ public class EntryController {
 				new Response(HttpStatus.BAD_REQUEST, false, "Password Not available for google/facebook user.", null);
 			}
 			if(passwordEncoder.matches(changePasswordRequest.getPreviousPassword(),login.getPassword())) {
-				if (AppUtils.checkIfPasswordValid(changePasswordRequest.getNewPassword()).isValid()) {
+				String invalidPasswordMessage = AppUtils.getInvalidPasswordMessage(changePasswordRequest.getNewPassword());
+
+				if (invalidPasswordMessage == null) {
 					login.setPassword(passwordEncoder.encode(changePasswordRequest.getNewPassword()));
 					loginService.saveUser(login);
 					return new Response(HttpStatus.OK, true, "Password Changed successfully", null);
 				} else {
-					return new Response(HttpStatus.BAD_REQUEST, false, "Password does not match requirements.", null);
+					return new Response(HttpStatus.BAD_REQUEST, false, invalidPasswordMessage, null);
 				}
 			} else {
 				return new Response(HttpStatus.BAD_REQUEST, false, "Incorrect old password.", null);
@@ -189,18 +181,18 @@ public class EntryController {
 	@GetMapping(value = "/refreshtoken")
 	public ResponseEntity<?> refreshtoken(HttpServletRequest request) throws Exception {
 		// From the HttpRequest get the claims
-		DefaultClaims claims = (io.jsonwebtoken.impl.DefaultClaims) request.getAttribute("claims");
+		Claims claims = (Claims) request.getAttribute("claims");
 		Map<String, Object> expectedMap = this.getMapFromIoJsonwebtokenClaims(claims);
 		String token = tokenProvider.doGenerateRefreshToken(expectedMap, expectedMap.get("sub").toString());
         return ResponseEntity.ok(new TokenResponse(token,null));
 	}
-	
-	public Map<String, Object> getMapFromIoJsonwebtokenClaims(DefaultClaims claims) {
+
+	public Map<String, Object> getMapFromIoJsonwebtokenClaims(Claims claims) {
 		Map<String, Object> expectedMap = new HashMap<String, Object>();
 		for (Entry<String, Object> entry : claims.entrySet()) {
 			expectedMap.put(entry.getKey(), entry.getValue());
 		}
+
 		return expectedMap;
 	}
-   
 }

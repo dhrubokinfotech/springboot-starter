@@ -1,7 +1,7 @@
 package com.disl.boilerplate.exceptions;
 
-import javax.servlet.http.HttpServletResponse;
 
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.AuthenticationException;
@@ -19,10 +19,11 @@ import com.disl.boilerplate.payloads.Response;
 public class ExceptionAuthHandlingController {
 	@ResponseBody
 	@ExceptionHandler(value = AuthenticationException.class)
-	public ResponseEntity<Object> handleAuthenticationExceptions(AuthenticationException ex,
-			HttpServletResponse response) {
-		return new ResponseEntity<>(new Response(HttpStatus.FORBIDDEN, false, "Invalid email/password provided.", ex.getLocalizedMessage()),
-				HttpStatus.UNAUTHORIZED);
+	public ResponseEntity<Object> handleAuthenticationExceptions(AuthenticationException ex, HttpServletResponse response) {
+		return new ResponseEntity<>(
+				new Response(HttpStatus.FORBIDDEN, false, "Invalid email/password provided.", ex.getLocalizedMessage()),
+				HttpStatus.UNAUTHORIZED
+		);
 	}
 
 	@ResponseBody

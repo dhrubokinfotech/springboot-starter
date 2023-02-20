@@ -1,22 +1,19 @@
 package com.disl.boilerplate.security;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
+import com.disl.boilerplate.models.Privilege;
+import com.disl.boilerplate.models.Role;
+import com.disl.boilerplate.models.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.disl.boilerplate.models.Privilege;
-import com.disl.boilerplate.models.Role;
-import com.disl.boilerplate.models.User;
-
-
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class CustomUserDetails implements UserDetails {
-	private static final long serialVersionUID = -6705336705176876550L;
-	
+
 	private String email;
 	private String password;
 	private Collection<? extends GrantedAuthority> authorities;
@@ -29,19 +26,17 @@ public class CustomUserDetails implements UserDetails {
 	}
 
 	public static CustomUserDetails create(User user) {
-		List<Role> roles = new ArrayList<>();
-		roles.addAll(user.getRoles());
-		List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
+		List<Role> roles = new ArrayList<>(user.getRoles());
 		List<Privilege> privileges = new ArrayList<>();
-		
+
 		for(Role role : roles) {
-			for (Privilege privilege : role.getPrivileges()) {
-				privileges.add(privilege);
-			}
+			privileges.addAll(role.getPrivileges());
 		}
-		for (Privilege privilege : privileges) {
-			authorities.add(new SimpleGrantedAuthority(privilege.getName()));
-		}
+
+		List<SimpleGrantedAuthority> authorities = privileges.stream()
+				.map(privilege -> new SimpleGrantedAuthority(privilege.getName()))
+				.collect(Collectors.toList());
+
 		return new CustomUserDetails(user.getEmail(), user.getPassword(), authorities);
 	}
 
@@ -96,5 +91,4 @@ public class CustomUserDetails implements UserDetails {
 	public void setAuthorities(Collection<? extends GrantedAuthority> authorities) {
 		this.authorities = authorities;
 	}
-	
 }

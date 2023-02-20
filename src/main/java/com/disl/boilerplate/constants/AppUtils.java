@@ -1,26 +1,17 @@
 package com.disl.boilerplate.constants;
 
+import org.springframework.beans.BeanWrapper;
+import org.springframework.beans.BeanWrapperImpl;
+import org.springframework.web.multipart.MultipartFile;
+
 import java.beans.FeatureDescriptor;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.regex.Pattern;
 import java.util.stream.Stream;
-import org.springframework.beans.BeanWrapper;
-import org.springframework.beans.BeanWrapperImpl;
-import org.springframework.web.multipart.MultipartFile;
-import edu.vt.middleware.password.CharacterCharacteristicsRule;
-import edu.vt.middleware.password.DigitCharacterRule;
-import edu.vt.middleware.password.LengthRule;
-import edu.vt.middleware.password.NonAlphanumericCharacterRule;
-import edu.vt.middleware.password.Password;
-import edu.vt.middleware.password.PasswordData;
-import edu.vt.middleware.password.PasswordValidator;
-import edu.vt.middleware.password.Rule;
-import edu.vt.middleware.password.RuleResult;
 
 public class AppUtils {
 
@@ -43,28 +34,31 @@ public class AppUtils {
 	   String regex = "^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$";
 	   return email.matches(regex);
 	}
-	
-	public static List<Rule> getPasswordRules () {
-		LengthRule lengthRule = new LengthRule(8, 15);
-		CharacterCharacteristicsRule charRule = new CharacterCharacteristicsRule();
-		charRule.getRules().add(new DigitCharacterRule(1));
-		charRule.getRules().add(new NonAlphanumericCharacterRule(1));
-		charRule.setNumberOfCharacteristics(2);
-		List<Rule> ruleList = new ArrayList<Rule>();
-		ruleList.add(charRule);
-		ruleList.add(lengthRule);
-		return ruleList;
+
+	public static String getInvalidPasswordMessage(String password) {
+		if(password == null || password.isEmpty()) {
+			return "Password can't be empty";
+		}
+
+		if(password.length() <= 7) {
+			return "Password must have 8 or more characters long";
+		}
+
+		if(password.contains(" ")) {
+			return "Password shouldn't contains white spaces";
+		}
+
+		Pattern digitPattern = Pattern.compile("[0-9]");
+		Pattern specialCharacterPattern = Pattern.compile("[0-9_\\/\\s,.-]+");
+
+		boolean isMatched = digitPattern.matcher(password).matches() && specialCharacterPattern.matcher(password).matches();
+		if(!isMatched) {
+			return "Password must have minimum a digit and an special character";
+		}
+
+		return null;
 	}
-	
-	public static RuleResult checkIfPasswordValid(String passwordToCheck) {
-		PasswordValidator validator = AppUtils.getValidator(AppUtils.getPasswordRules());
-		return validator.validate(new PasswordData(new Password(passwordToCheck)));
-	}
-	
-	public static PasswordValidator getValidator(List<Rule> ruleList) {
-		return new PasswordValidator(ruleList);
-	}
-	
+
 	public static boolean isNullorEmpty (String str) {
 		if (str == null || str.isEmpty()) {
 			return true;

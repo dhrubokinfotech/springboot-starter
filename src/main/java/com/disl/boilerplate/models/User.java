@@ -1,20 +1,19 @@
 package com.disl.boilerplate.models;
 
 import java.util.*;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
-import javax.validation.constraints.Size;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.Table;
+import jakarta.validation.constraints.Size;
 import com.disl.boilerplate.constants.AppTables;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
 
 @Entity
 @Table(name = AppTables.user)
@@ -40,11 +39,12 @@ public class User extends AuditModel<String> {
 	private String name;
 
 	
-	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(
-		name = AppTables.userRole, 
+		name = AppTables.userRole,
 		joinColumns = @JoinColumn(name = "user_id"),
-		inverseJoinColumns = @JoinColumn(name = AppTables.roleTable.roleId))
+		inverseJoinColumns = @JoinColumn(name = AppTables.roleTable.roleId)
+	)
+	@ManyToMany(fetch = FetchType.EAGER)
 	private Set<Role> roles = new HashSet<>();
 
 	public long getId() {
@@ -94,5 +94,4 @@ public class User extends AuditModel<String> {
 	public void setRoles(Set<Role> roles) {
 		this.roles = roles;
 	}
-
 }

@@ -1,6 +1,6 @@
 package com.disl.boilerplate.models.requests;
 
-import javax.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotBlank;
 
 public class SignInRequest {
 	@NotBlank

@@ -16,7 +16,6 @@ import com.disl.boilerplate.models.User;
 import com.disl.boilerplate.models.requests.ForgetPassRequest;
 import com.disl.boilerplate.services.UserService;
 
-import edu.vt.middleware.password.RuleResult;
 import springfox.documentation.annotations.ApiIgnore;
 
 @ApiIgnore
@@ -62,23 +61,18 @@ public class ForgetPasswordController {
 	 		model.addAttribute("message", "Passwords are not same.");
 	 		return "dispatchMessage";
 	 	}
-	 	RuleResult ruleResult = AppUtils.checkIfPasswordValid(forgetPassRequest.getPass1());
-	 	if (ruleResult.isValid()) {
+
+		 String invalidPasswordMessage = AppUtils.getInvalidPasswordMessage(forgetPassRequest.getPass1());
+
+	 	if (invalidPasswordMessage == null) {
 	 		user.setPassword(passwordEncoder.encode(forgetPassRequest.getPass1()));
 	 		user.setPasswordResetToken(null);
 	 		userService.saveUser(user);
 	 		model.addAttribute("message", "Password Changed Successfully.");
-	 		return "dispatchMessage"; 
-	 	} else {
-	 		String totalMsg = "";
-	 		  for (String msg : AppUtils.getValidator(AppUtils.getPasswordRules()).getMessages(ruleResult)) {
-	 			  totalMsg = totalMsg + msg + "\n";
-	 		  }
+		} else {
+	 		model.addAttribute("message", invalidPasswordMessage);
+		}
 
-	 		model.addAttribute("message", totalMsg);
-	 		return "dispatchMessage";
-	 	}
-		 	
+		 return "dispatchMessage";
 	 }
-	 
 }

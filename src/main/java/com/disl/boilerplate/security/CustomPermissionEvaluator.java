@@ -1,12 +1,12 @@
 package com.disl.boilerplate.security;
 
-import java.io.Serializable;
-
 import org.springframework.security.access.PermissionEvaluator;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 
-public class CustomPermissionEvaluator implements PermissionEvaluator{
+import java.io.Serializable;
+
+public class CustomPermissionEvaluator implements PermissionEvaluator {
 
 	@Override
 	public boolean hasPermission(Authentication authentication, Object targetDomainObject, Object permission) {		
@@ -35,6 +35,7 @@ public class CustomPermissionEvaluator implements PermissionEvaluator{
 	            }
 	        }
 	    }
+
 	    return false;
 	}
 }

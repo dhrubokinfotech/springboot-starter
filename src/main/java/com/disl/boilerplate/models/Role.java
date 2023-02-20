@@ -1,7 +1,7 @@
 package com.disl.boilerplate.models;
 
 import java.util.Collection;
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 import com.disl.boilerplate.constants.AppTables;
 import com.disl.boilerplate.enums.RoleType;
@@ -19,7 +19,11 @@ public class Role extends AuditModel<String> {
 	private String roleName;
 
 	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
-	@JoinTable(name = AppTables.rolePrivilege, joinColumns = @JoinColumn(name = "role_id"), inverseJoinColumns = @JoinColumn(name = "privilege_id"))
+	@JoinTable(
+			name = AppTables.rolePrivilege,
+			joinColumns = @JoinColumn(name = "role_id"),
+			inverseJoinColumns = @JoinColumn(name = "privilege_id")
+	)
 	private Collection<Privilege> privileges;
 
 	@Column(nullable = true)
