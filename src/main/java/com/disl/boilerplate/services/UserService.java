@@ -1,23 +1,22 @@
 package com.disl.boilerplate.services;
 
-import java.util.List;
-import java.util.Optional;
+import com.disl.boilerplate.entities.Role;
+import com.disl.boilerplate.entities.User;
+import com.disl.boilerplate.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.disl.boilerplate.models.Role;
-import com.disl.boilerplate.models.User;
-import com.disl.boilerplate.repository.UserDao;
 
-
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
 
 	@Autowired
-	private UserDao userDao;
+	private UserRepository userRepository;
 
 	public User findByEmail(String email) {
-		Optional<User> loggedUser = userDao.findByEmail(email);
+		Optional<User> loggedUser = userRepository.findByEmail(email);
 		if (loggedUser.isPresent() == true) {
 			return loggedUser.get();
 		} else {
@@ -26,7 +25,7 @@ public class UserService {
 	}
 
 	public User findByPasswordResetToken(String token) {
-		Optional<User> user = userDao.findByPasswordResetToken(token);
+		Optional<User> user = userRepository.findByPasswordResetToken(token);
 		if (user.isPresent() == true) {
 			return user.get();
 		} else {
@@ -35,7 +34,7 @@ public class UserService {
 	}
 
 	public User findById(long id) {
-		Optional<User> loggedUser = userDao.findById(id);
+		Optional<User> loggedUser = userRepository.findById(id);
 		if (loggedUser.isPresent() == true) {
 			return loggedUser.get();
 		} else {
@@ -44,21 +43,21 @@ public class UserService {
 	}
 
 	public User saveUser(User user) {
-		return this.userDao.save(user);
+		return this.userRepository.save(user);
 	}
 	
 
 	public List<User> getAllUsersList() {
-		return userDao.findAll();
+		return userRepository.findAll();
 	}
 
 	
 	public List<User> getAllUsersByRole (Role role) {
-		return userDao.findByRoles(role);
+		return userRepository.findByRoles(role);
 	} 
 	
 	public List<User> getAllUsersByRolesIn (Role[] roles) {
-		return userDao.findByRolesIn(roles);
+		return userRepository.findByRolesIn(roles);
 	} 
 	
 	

@@ -1,27 +1,23 @@
-package com.disl.boilerplate.models;
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+package com.disl.boilerplate.entities;
 
 import com.disl.boilerplate.constants.AppTables;
+import com.disl.boilerplate.constants.AppTables.PrivilegeTable;
+import com.disl.boilerplate.models.AuditModel;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = AppTables.privilege)
-public class Privilege extends AuditModel<String>{
+public class Privilege extends AuditModel<String> {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = AppTables.privilegeTable.id)
+	@Column(name = PrivilegeTable.id)
 	private long id;
 	
-	@Column(name = AppTables.privilegeTable.name)
+	@Column(name = PrivilegeTable.name)
 	private String name;
 	
-	@Column(name = AppTables.privilegeTable.descName)
+	@Column(name = PrivilegeTable.descName)
 	private String descName;
 
 	public long getId() {

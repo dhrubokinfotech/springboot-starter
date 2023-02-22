@@ -1,7 +1,6 @@
 package com.disl.boilerplate.exceptions;
 
-import java.sql.SQLException;
-
+import com.disl.boilerplate.models.Response;
 import org.springframework.beans.ConversionNotSupportedException;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
@@ -21,10 +20,9 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
-
-import com.disl.boilerplate.payloads.Response;
-
 import springfox.documentation.annotations.ApiIgnore;
+
+import java.sql.SQLException;
 
 @Order(Ordered.HIGHEST_PRECEDENCE)
 @ControllerAdvice
@@ -36,8 +34,7 @@ public class ExceptionHandlingController extends ResponseEntityExceptionHandler 
 			HttpMessageNotReadableException ex, HttpHeaders headers,
 			HttpStatusCode status, WebRequest request
 	) {
-		String error = "Invalid input.";
-		return buildResponseEntity((new Response(status, false, error, ex.getLocalizedMessage())));
+		return buildResponseEntity((new Response(status, false, "Invalid input.", ex.getLocalizedMessage())));
 	}
 
 	private ResponseEntity<Object> buildResponseEntity(Response apiError) {

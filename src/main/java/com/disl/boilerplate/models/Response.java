@@ -1,4 +1,4 @@
-package com.disl.boilerplate.payloads;
+package com.disl.boilerplate.models;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;

@@ -3,15 +3,15 @@ package com.disl.boilerplate.controllers;
 import com.disl.boilerplate.config.AppProperties;
 import com.disl.boilerplate.constants.AppConstants;
 import com.disl.boilerplate.constants.AppUtils;
-import com.disl.boilerplate.models.Role;
-import com.disl.boilerplate.models.User;
+import com.disl.boilerplate.entities.Role;
+import com.disl.boilerplate.entities.User;
 import com.disl.boilerplate.models.requests.ChangePasswordRequest;
 import com.disl.boilerplate.models.requests.InitialForgetPasswordRequest;
 import com.disl.boilerplate.models.requests.SignInRequest;
 import com.disl.boilerplate.models.requests.SignUpRequest;
 import com.disl.boilerplate.models.responses.TokenResponse;
-import com.disl.boilerplate.payloads.Response;
-import com.disl.boilerplate.repository.RoleDao;
+import com.disl.boilerplate.models.Response;
+import com.disl.boilerplate.repository.RoleRepository;
 import com.disl.boilerplate.security.CustomUserDetailsService;
 import com.disl.boilerplate.security.JwtTokenProvider;
 import com.disl.boilerplate.services.MailService;
@@ -46,7 +46,7 @@ public class EntryController {
 	private PasswordEncoder passwordEncoder;
 
 	@Autowired
-	RoleDao roleDao;
+	RoleRepository roleRepository;
 	
     @Autowired
     AuthenticationManager authenticationManager;
@@ -110,7 +110,7 @@ public class EntryController {
     	signedUser.setEmail(signUpRequest.getEmail());
     	signedUser.setPassword(passwordEncoder.encode(signUpRequest.getPassword()));
     	signedUser.setName(signUpRequest.getName());
-    	Optional<Role> role = roleDao.findByRoleName(AppConstants.consumerRole);
+    	Optional<Role> role = roleRepository.findByRoleName(AppConstants.consumerRole);
     	
     	if (role.isPresent()) {
     		Set<Role> roles = new HashSet<>();
@@ -168,7 +168,7 @@ public class EntryController {
 			user.setPasswordResetToken(token);
 			loginService.saveUser(user);
 			
-			if(AppConstants.activeProfile != AppConstants.environment.development) {        			
+			if(appProperties.getActiveProfile() != AppConstants.environment.development) {
 				mailService.sendMail(user.getEmail(), AppConstants.forgetPasswordSubject, AppConstants.forgetPasswordText + appProperties.getBackEndUrl()+AppConstants.RESET_PASSWORD_SUBURL + token);
     		}
 			

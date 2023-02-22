@@ -1,25 +1,20 @@
 package com.disl.boilerplate.config;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import com.disl.boilerplate.constants.AppConstants;
+import com.disl.boilerplate.enums.RoleType;
+import com.disl.boilerplate.entities.Privilege;
+import com.disl.boilerplate.entities.Role;
+import com.disl.boilerplate.entities.User;
+import com.disl.boilerplate.services.PrivilegeService;
+import com.disl.boilerplate.services.RoleService;
+import com.disl.boilerplate.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ApplicationContextEvent;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import com.disl.boilerplate.constants.AppConstants;
-import com.disl.boilerplate.enums.RoleType;
-import com.disl.boilerplate.models.Privilege;
-import com.disl.boilerplate.models.Role;
-import com.disl.boilerplate.models.User;
-import com.disl.boilerplate.services.PrivilegeService;
-import com.disl.boilerplate.services.RoleService;
-import com.disl.boilerplate.services.UserService;
-
+import java.util.*;
 
 @Component
 public class InitialDataLoader implements ApplicationListener<ApplicationContextEvent>{
@@ -36,17 +31,20 @@ public class InitialDataLoader implements ApplicationListener<ApplicationContext
 	@Autowired
 	UserService loginService;
 
+	@Autowired
+	AppProperties appProperties;
+
 	public InitialDataLoader(PasswordEncoder passwordEncoder) {
 		this.passwordEncoder = passwordEncoder;
 	}
 	
 	@Override
-	public void onApplicationEvent(ApplicationContextEvent event) {		
+	public void onApplicationEvent(ApplicationContextEvent event) {
 		List<Privilege> superAdminPrivileges = new ArrayList<Privilege>();
 
-		for (Map.Entry<String, String> entry : AppConstants.PERMISSSIONS.entrySet()) {
+		for (Map.Entry<String, String> entry : AppConstants.PERMISSIONS.entrySet()) {
 			boolean ifPrivilegeExists = this.checkIfPrivilegeExist(entry.getKey());
-			if (ifPrivilegeExists == false) {
+			if (!ifPrivilegeExists) {
 				Privilege newPrivilege = privilegeService.createPrivilege(entry.getKey(),entry.getValue());
 				superAdminPrivileges.add(newPrivilege);
 			}

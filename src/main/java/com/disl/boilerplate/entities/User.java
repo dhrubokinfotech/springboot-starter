@@ -1,19 +1,14 @@
-package com.disl.boilerplate.models;
+package com.disl.boilerplate.entities;
 
-import java.util.*;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.Table;
-import jakarta.validation.constraints.Size;
 import com.disl.boilerplate.constants.AppTables;
+import com.disl.boilerplate.constants.AppTables.UserTable;
+import com.disl.boilerplate.models.AuditModel;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = AppTables.user)
@@ -21,28 +16,30 @@ public class User extends AuditModel<String> {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = AppTables.userTable.id)
+	@Column(name = UserTable.id)
 	private long id;
 
-	@Column(name = AppTables.userTable.email, nullable = false, unique = true)
+	@Column(name = UserTable.email, nullable = false, unique = true)
 	private String email;
 
-	@Column(length = 255)
+	@Column(name = UserTable.password)
 	@JsonIgnore
 	@Size(max = 120)
 	private String password;
 
-	@Column(name = AppTables.userTable.passwordResetToken, nullable = true)
+	@Column(name = UserTable.passwordResetToken)
 	private String passwordResetToken;
 
-	@Column(length = 255)
+	@Column(name = UserTable.name)
 	private String name;
 
+	@Column (name = UserTable.verified)
+	private Boolean verified = false;
 	
 	@JoinTable(
 		name = AppTables.userRole,
 		joinColumns = @JoinColumn(name = "user_id"),
-		inverseJoinColumns = @JoinColumn(name = AppTables.roleTable.roleId)
+		inverseJoinColumns = @JoinColumn(name = AppTables.RoleTable.roleId)
 	)
 	@ManyToMany(fetch = FetchType.EAGER)
 	private Set<Role> roles = new HashSet<>();
@@ -93,5 +90,13 @@ public class User extends AuditModel<String> {
 
 	public void setRoles(Set<Role> roles) {
 		this.roles = roles;
+	}
+
+	public Boolean getVerified() {
+		return verified;
+	}
+
+	public void setVerified(Boolean verified) {
+		this.verified = verified;
 	}
 }

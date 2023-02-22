@@ -1,24 +1,25 @@
 package com.disl.boilerplate.services;
 
+import com.disl.boilerplate.entities.Privilege;
+import com.disl.boilerplate.entities.Role;
+import com.disl.boilerplate.enums.RoleType;
+import com.disl.boilerplate.repository.RoleRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import com.disl.boilerplate.enums.RoleType;
-import com.disl.boilerplate.models.Privilege;
-import com.disl.boilerplate.models.Role;
-import com.disl.boilerplate.repository.RoleDao;
 
 
 @Service
 public class RoleService {
 	
 	@Autowired
-	RoleDao roleDao;
+	RoleRepository roleRepository;
 	
 	public Role findRoleByName(String roleName){
-		Optional<Role> role = roleDao.findByRoleName(roleName);
+		Optional<Role> role = roleRepository.findByRoleName(roleName);
 		if (role.isPresent()) {
 			return role.get();
 		} else {
@@ -27,16 +28,16 @@ public class RoleService {
 	}
 	
 	public Role findByRoleType(RoleType roleType) {
-		Optional<Role> role = roleDao.findByRoleType(roleType);
+		Optional<Role> role = roleRepository.findByRoleType(roleType);
 		return role.isPresent() ? role.get() : null;
 	}
 	
 	public List<Role> findAllByRoleType(RoleType roleType) {
-		return roleDao.findAllByRoleType(roleType);
+		return roleRepository.findAllByRoleType(roleType);
 	}
 	
 	public Role findRoleById (long id) {
-		Optional<Role> role = roleDao.findById(id);
+		Optional<Role> role = roleRepository.findById(id);
 		if (role.isPresent()) {
 			return role.get();
 		} else {
@@ -50,25 +51,25 @@ public class RoleService {
 		role.setPrivileges(privileges);
 		role.setRoleType(roleType);
 		role.setDescription(description);
-		return roleDao.save(role);
+		return roleRepository.save(role);
 	}
 	
 	public List<Role> findAllRoles (String roleType) {
 		if(!roleType.isEmpty()) {
-			return roleDao.findAllByRoleType(RoleType.valueOf(String.valueOf(roleType)));
+			return roleRepository.findAllByRoleType(RoleType.valueOf(String.valueOf(roleType)));
 		}
 		
-		return roleDao.findAll();
+		return roleRepository.findAll();
 	}
 	
 	public Role saveRole (Role role) {
-		return roleDao.save(role);
+		return roleRepository.save(role);
 	}
 	
 	public Role deleteRole(long id) {
-		Optional<Role> role = roleDao.findById(id);
+		Optional<Role> role = roleRepository.findById(id);
 		if (role.isPresent()) {
-			roleDao.delete(role.get());
+			roleRepository.delete(role.get());
 			return role.get();
 		} else {
 			return null;

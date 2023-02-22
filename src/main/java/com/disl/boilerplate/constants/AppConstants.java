@@ -1,32 +1,15 @@
 package com.disl.boilerplate.constants;
+
 import java.util.HashMap;
 
 public class AppConstants {
-	
+
 	public enum environment {
 		development,
 		staging,
-		production,
-		clienttest
-	}
-	 
-	public static String logfilePath () {
-		switch (activeProfile) {
-			case development:
-				return "/Users/hafiz/Desktop/SpringAuth/Logs";
-			case staging:
-				return "/home/ubuntu/logfiles/";
-			case production:
-				return "/home/ubuntu/logfiles/";
-			case clienttest:
-				return "/home/ubuntu/logfiles/";
-		}
-		
-		return "";
+		production
 	}
 
-	public static final environment activeProfile = environment.staging;
-	
 	public static String DEFAULTDATEFORMAT = "dd-MMM-yy";
 
 	public static String USERNAME = "super_admin@disl.com";
@@ -49,23 +32,32 @@ public class AppConstants {
 	public final static String forgetPasswordSubject = "BoilerPlate Password Reset Link";
 	public final static String forgetPasswordText = " To reset your password in BoilerPlate please click on the following url \n \t" ;
 
+	public static final String PAGE_NO = "pageNo";
+	public static final String SORT_BY = "sortBy";
+	public static final String PAGE_SIZE = "pageSize";
+	public static final String ASC_OR_DESC = "ascOrDesc";
+
+	public static final String PAGE_NO_VALUE = "0";
+	public static final String PAGE_SIZE_VALUE = "20";
+	public static final String ASC_OR_DESC_VALUE = "asc";
+	public static final String SORT_BY_VALUE = "creationDate";
+
+	public static final String PARAMERTES = "parameters";
 	
-	public static HashMap<String, String> PERMISSSIONS = new HashMap<String, String>() {
-		private static final long serialVersionUID = -8925309825687257974L;
+	public static HashMap<String, String> PERMISSIONS = new HashMap<>() {
 		{
-			put("GENERAL","GENERAL CONSUMER");
-			
+			put("GENERAL", "GENERAL CONSUMER");
+
 			put("USER_CREATE", "USER CREATE");
 			put("USER_READ", "USER READ");
 			put("USER_UPDATE", "USER UPDATE");
 			put("USER_DELETE", "USER DELETE");
-			
+
 			put("ROLE_CREATE", "ROLE CREATE");
 			put("ROLE_READ", "ROLE READ");
 			put("ROLE_UPDATE", "ROLE UPDATE");
 			put("ROLE_DELETE", "ROLE DELETE");
 		}
 	};
-	
 }
 

@@ -18,11 +18,15 @@
 
 	<properties>
 		<java.version>17</java.version>
-		<swagger.version>3.0.0</swagger.version>
-		<jjwt.version>0.11.5</jjwt.version>
+		<maven.compiler.source>${java.version}</maven.compiler.source>
+		<maven.compiler.target>${java.version}</maven.compiler.target>
 
-		<maven.compiler.source>17</maven.compiler.source>
-		<maven.compiler.target>17</maven.compiler.target>
+		<jjwt.version>0.11.5</jjwt.version>
+		<log4j.version>2.19.0</log4j.version>
+		<servlet.version>2.5</servlet.version>
+		<swagger.version>3.0.0</swagger.version>
+		<modelmapper.version>3.1.1</modelmapper.version>
+		<hibernate.validator.version>8.0.0.Final</hibernate.validator.version>
 	</properties>
 
 	<dependencies>
@@ -47,34 +51,22 @@
 		</dependency>
 
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-devtools</artifactId>
-			<scope>runtime</scope>
-			<optional>true</optional>
-		</dependency>
-
-		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
 			<scope>runtime</scope>
 		</dependency>
 
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
-			<exclusions>
-				<exclusion>
-					<groupId>org.junit.vintage</groupId>
-					<artifactId>junit-vintage-engine</artifactId>
-				</exclusion>
-			</exclusions>
+			<groupId>org.modelmapper</groupId>
+			<artifactId>modelmapper</artifactId>
+			<version>${modelmapper.version}</version>
 		</dependency>
 
 		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-test</artifactId>
-			<scope>test</scope>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<version>${servlet.version}</version>
+			<scope>provided</scope>
 		</dependency>
 
 		<dependency>
@@ -106,7 +98,7 @@
 		<dependency>
 			<groupId>org.hibernate.validator</groupId>
 			<artifactId>hibernate-validator</artifactId>
-			<version>8.0.0.Final</version>
+			<version>${hibernate.validator.version}</version>
 		</dependency>
 
 		<dependency>
@@ -139,10 +131,40 @@
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
 			<artifactId>log4j</artifactId>
-			<version>2.19.0</version>
+			<version>${log4j.version}</version>
 			<type>pom</type>
 		</dependency>
 
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-configuration-processor</artifactId>
+			<optional>true</optional>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+			<scope>runtime</scope>
+			<optional>true</optional>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+			<exclusions>
+				<exclusion>
+					<groupId>org.junit.vintage</groupId>
+					<artifactId>junit-vintage-engine</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -159,8 +181,8 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<configuration>
-					<source>17</source>
-					<target>17</target>
+					<source>${java.version}</source>
+					<target>${java.version}</target>
 				</configuration>
 			</plugin>
 		</plugins>

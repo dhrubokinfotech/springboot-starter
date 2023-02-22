@@ -20,8 +20,8 @@ import java.util.List;
 @EnableSwagger2
 public class SwaggerConfig implements WebMvcConfigurer {
 
-	@Autowired
-	AppProperties appProperties;
+    @Autowired
+    private AppProperties appProperties;
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
@@ -38,12 +38,12 @@ public class SwaggerConfig implements WebMvcConfigurer {
     @Bean
     public Docket customImplementation() {
         return new Docket(DocumentationType.SWAGGER_2)
-        	.host(appProperties.getBackEndUrl1())
-            .select()
-            .apis(RequestHandlerSelectors.any())
-            .build()
-            .apiInfo(apiInfo())
-            .securitySchemes(List.of(apiKey()));
+                .host(appProperties.getSwaggerBackendUrl())
+                .select()
+                .apis(RequestHandlerSelectors.any())
+                .build()
+                .apiInfo(apiInfo())
+                .securitySchemes(List.of(apiKey()));
 
     }
 
@@ -51,12 +51,12 @@ public class SwaggerConfig implements WebMvcConfigurer {
         return new ApiKey("jwtToken", "Authorization", "header");
     }
 
-	   private ApiInfo apiInfo() {
-	      return new ApiInfoBuilder()
-	            .title("BoilerPlate API")
-	            .description("BoilerPlate API")
-	            .version("Version 1.0.0")
-	            .licenseUrl("https://boilerplate.com/")
-	            .build();
-	   }
+    private ApiInfo apiInfo() {
+        return new ApiInfoBuilder()
+                .title("BoilerPlate API")
+                .description("BoilerPlate API")
+                .version("Version 1.0.0")
+                .licenseUrl("https://boilerplate.com/")
+                .build();
+    }
 }

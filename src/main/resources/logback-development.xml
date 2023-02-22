@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
 
-    <property name="DIRECTORY" value="/Users/zakaria/Documents/Development/Backend/logs/logback" />
+    <property scope="context" name="LOG_DIRECTORY" value="/Users/zakaria/Documents/Development/Backend/logs/logback" />
     
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
@@ -11,10 +11,10 @@
 
     <appender name="FILE"
         class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${DIRECTORY}/logfile.log</file>
+        <file>${LOG_DIRECTORY}/logfile.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-            <fileNamePattern>${DIRECTORY}/%d{dd-MM-yyyy, aux}/logfile-%d{yyyy-MM-dd}.%i.log</fileNamePattern> 
-            <maxFileSize>1GB</maxFileSize>
+            <fileNamePattern>${LOG_DIRECTORY}/%d{dd-MM-yyyy, aux}/logfile-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <maxFileSize>2GB</maxFileSize>
         </rollingPolicy>
         <encoder>
             <pattern>[%d{yyyy-MM-dd HH:mm:ss.sss}][%-5p][%C][%t][%L]%m%n

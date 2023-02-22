@@ -1,6 +1,6 @@
 package com.disl.boilerplate.models.responses;
 
-import com.disl.boilerplate.models.User;
+import com.disl.boilerplate.entities.User;
 
 public class TokenResponse {
 	private String accessToken;

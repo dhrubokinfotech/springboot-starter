@@ -1,25 +1,21 @@
 package com.disl.boilerplate.services;
 
-import java.util.List;
-import java.util.Optional;
+import com.disl.boilerplate.entities.Privilege;
+import com.disl.boilerplate.repository.PrivilegeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.disl.boilerplate.models.Privilege;
-import com.disl.boilerplate.repository.PrivilegeDao;
+
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PrivilegeService {
 
 	@Autowired
-	PrivilegeDao privilegeDao;
+    PrivilegeRepository privilegeDao;
 	
 	public Privilege findByPrivilegeName (String name) {
-		Optional<Privilege> privilege = privilegeDao.findByName(name);
-		if (privilege.isPresent()) {
-			return privilege.get();
-		} else {
-			return null;
-		}
+		return privilegeDao.findByName(name).orElse(null);
 	}
 	
 	public Privilege createPrivilege(String name,String descName) {

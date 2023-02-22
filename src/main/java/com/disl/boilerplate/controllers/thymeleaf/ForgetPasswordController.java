@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.disl.boilerplate.constants.AppUtils;
-import com.disl.boilerplate.models.User;
+import com.disl.boilerplate.entities.User;
 import com.disl.boilerplate.models.requests.ForgetPassRequest;
 import com.disl.boilerplate.services.UserService;
 

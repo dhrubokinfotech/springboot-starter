@@ -1,16 +1,12 @@
 package com.disl.boilerplate.controllers;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.List;
-
+import ch.qos.logback.classic.LoggerContext;
+import com.disl.boilerplate.models.responses.ApplicationLog;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+import io.swagger.annotations.Authorization;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.support.PagedListHolder;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.data.domain.Page;
@@ -26,44 +22,43 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.disl.boilerplate.constants.AppConstants;
-import com.disl.boilerplate.models.responses.ApplicationLog;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
-import io.swagger.annotations.Authorization;
+import static com.disl.boilerplate.BoilerplateApplication.logger;
 
 @RestController
 @RequestMapping("/logging")
 public class LogfileController {
 
 	@ApiOperation(value = "Get all log files from the file system", authorizations = {@Authorization(value = "jwtToken")})
-	@ApiResponses(value = {@ApiResponse(code = 200, message = "Success", response = ApplicationLog.class),@ApiResponse(code = 401, message = "Unauthorized"),@ApiResponse(code = 403, message="Forbidden"),@ApiResponse(code = 404, message = "Not Found"),@ApiResponse(code = 500, message = "Failure")})
+	@ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Success", response = ApplicationLog.class),
+            @ApiResponse(code = 401, message = "Unauthorized"),
+            @ApiResponse(code = 403, message="Forbidden"),
+            @ApiResponse(code = 404, message = "Not Found"),
+            @ApiResponse(code = 500, message = "Failure")
+    })
 	@PreAuthorize("hasPermission(null, 'USER', 'READ')")
 	@GetMapping("/logfiles")
     public Page<ApplicationLog> getLog(
     		@RequestParam(name = "pageNo", defaultValue = "0") int pageNo,
             @RequestParam(name = "pageSize", defaultValue = "10") int pageSize,
-            @RequestParam(name = "keyword", defaultValue = "") String keyword) throws Exception {
-
-        File root = new File(AppConstants.logfilePath());
-        System.out.println("Root file = " + root.getAbsolutePath());
+            @RequestParam(name = "keyword", defaultValue = "") String keyword
+    ) {
         List<File> files = new ArrayList<>();
-        this.listf(AppConstants.logfilePath(), files);
+        this.listf(getLogFilePath(), files);
 
-        System.out.println("Logfile path = " + AppConstants.logfilePath());
-        System.out.println("#### Files ###");
-        for (File f : files) {
-            System.out.println(f.getName());
-        }
-        System.out.println("#### Files ###");
-
-        List<ApplicationLog> applicationLogs = new ArrayList<ApplicationLog>();
+        List<ApplicationLog> applicationLogs = new ArrayList<>();
 
         if (keyword != null && keyword.length() > 0) {
             for (File f : files) {
-                if (f.getName().contains(keyword) && f.isDirectory() == false) {
+                if (f.getName().contains(keyword) && !f.isDirectory()) {
                 	ApplicationLog applicationLog = new ApplicationLog();
                 	applicationLog.setFileName(f.getName());
                     Date d = new Date(f.lastModified());
@@ -81,14 +76,9 @@ public class LogfileController {
             }
         }
 
-        Collections.sort(applicationLogs, new Comparator<ApplicationLog>() {
-            @Override
-            public int compare(ApplicationLog o1, ApplicationLog o2) {
-                return o2.getLastModified().compareTo(o1.getLastModified());
-            }
-        });
+        applicationLogs.sort((o1, o2) -> o2.getLastModified().compareTo(o1.getLastModified()));
 
-        PagedListHolder<ApplicationLog> pageHolder = new PagedListHolder<ApplicationLog>(applicationLogs);
+        PagedListHolder<ApplicationLog> pageHolder = new PagedListHolder<>(applicationLogs);
         pageHolder.setPageSize(pageSize);
         pageHolder.setPage(pageNo);
         Pageable paging = PageRequest.of(pageNo, pageSize);
@@ -110,34 +100,29 @@ public class LogfileController {
     }
 
     @ApiOperation(value = "Download a log file from the file system", authorizations = {@Authorization(value = "jwtToken")})
-	@ApiResponses(value = {@ApiResponse(code = 200, message = "Success", response = ResponseEntity.class),@ApiResponse(code = 401, message = "Unauthorized"),@ApiResponse(code = 403, message="Forbidden"),@ApiResponse(code = 404, message = "Not Found"),@ApiResponse(code = 500, message = "Failure")})
+	@ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Success", response = ResponseEntity.class),
+            @ApiResponse(code = 401, message = "Unauthorized"),
+            @ApiResponse(code = 403, message="Forbidden"),
+            @ApiResponse(code = 404, message = "Not Found"),
+            @ApiResponse(code = 500, message = "Failure")
+    })
     @PreAuthorize("hasPermission(null, 'USER', 'READ')")
     @GetMapping("/download-log")
     public ResponseEntity<?> downloadFile(@RequestParam(name = "fileName") String fileName) throws Exception {
-
         try {
-        		File root = new File(AppConstants.logfilePath());
-			System.out.println("Root file = " + root.getAbsolutePath());
 			List<File> files = new ArrayList<>();
-			this.listf(AppConstants.logfilePath(), files);
+			this.listf(getLogFilePath(), files);
 
-			System.out.println("Logfile path = " + AppConstants.logfilePath());
-			
-			System.out.println("#### Files ###");
-        		String absPath = "";
+            String absPath = "";
 			for (File f : files) {
-				System.out.println(f.getName());
 				if (f.getName().contentEquals(fileName)) {
 					absPath = f.getAbsolutePath();
 					break;
 				}
 			}
-			
-			if (absPath == null) {
-				throw new FileNotFoundException();
-			}
-			
-			byte[] array = Files.readAllBytes(Paths.get(absPath));
+
+            byte[] array = Files.readAllBytes(Paths.get(absPath));
 			return ResponseEntity.ok().contentType(MediaType.parseMediaType("text/plain"))
 					.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileName + ".log" + "\"")
 					.body(new ByteArrayResource(array));
@@ -145,7 +130,15 @@ public class LogfileController {
         } catch (IOException e) {
             System.out.println("An error occurred.");
             e.printStackTrace();
-            	throw e;
+            throw e;
         }
+    }
+
+    private String getLogFilePath() {
+        LoggerContext loggerContext = (LoggerContext) LoggerFactory.getILoggerFactory();
+        String logDirPath = loggerContext.getProperty("LOG_DIRECTORY");
+
+        logger.info("Logfile path => {}", logDirPath);
+        return logDirPath;
     }
 }

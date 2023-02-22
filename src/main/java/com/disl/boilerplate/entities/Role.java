@@ -1,21 +1,22 @@
-package com.disl.boilerplate.models;
-
-import java.util.Collection;
-import jakarta.persistence.*;
+package com.disl.boilerplate.entities;
 
 import com.disl.boilerplate.constants.AppTables;
+import com.disl.boilerplate.constants.AppTables.RoleTable;
 import com.disl.boilerplate.enums.RoleType;
+import com.disl.boilerplate.models.AuditModel;
+import jakarta.persistence.*;
 
+import java.util.Collection;
 
 @Entity
 @Table(name = AppTables.role)
 public class Role extends AuditModel<String> {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = AppTables.roleTable.roleId)
+	@Column(name = RoleTable.roleId)
 	private Long id;
 
-	@Column(name = AppTables.roleTable.roleName)
+	@Column(name = RoleTable.roleName)
 	private String roleName;
 
 	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
@@ -26,13 +27,14 @@ public class Role extends AuditModel<String> {
 	)
 	private Collection<Privilege> privileges;
 
-	@Column(nullable = true)
+	@Column(name = RoleTable.roleType)
 	@Enumerated(EnumType.STRING)
 	private RoleType roleType;
 
-	@Column(columnDefinition="TEXT")
+	@Column(name = RoleTable.description, columnDefinition="TEXT")
 	private String description;
 
+	@Column(name = RoleTable.imageUrl)
 	private String imageUrl;
 
 	public Long getId() {
