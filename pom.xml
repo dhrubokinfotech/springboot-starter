@@ -13,7 +13,7 @@
 	<groupId>com.disl</groupId>
 	<artifactId>boilerplate</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>Boilerplate</name>
+	<name>Boilerplate 1</name>
 	<description>Java Spring boot based boilerplate code with Spring Security, Swagger and Logging configured.</description>
 
 	<properties>
@@ -168,6 +168,12 @@
 	</dependencies>
 
 	<build>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>

@@ -6,35 +6,29 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class PrivilegeService {
 
 	@Autowired
-    PrivilegeRepository privilegeDao;
+    private PrivilegeRepository privilegeRepository;
 	
 	public Privilege findByPrivilegeName (String name) {
-		return privilegeDao.findByName(name).orElse(null);
+		return privilegeRepository.findByName(name).orElse(null);
 	}
 	
 	public Privilege createPrivilege(String name,String descName) {
 		Privilege privilege = new Privilege();
 		privilege.setName(name);
 		privilege.setDescName(descName);
-		return privilegeDao.save(privilege);
+		return privilegeRepository.save(privilege);
 	}
 	
 	public List<Privilege> viewAllPrivileges() {
-		return privilegeDao.findAll();
+		return privilegeRepository.findAll();
 	}
 	
 	public Privilege findByPrivilegeId (long id) {
-		Optional <Privilege> privilege = privilegeDao.findById(id);
-		if (privilege.isPresent()) {
-			return privilege.get();
-		} else {
-			return null;
-		}
+		return privilegeRepository.findById(id).orElse(null);
 	}
 }

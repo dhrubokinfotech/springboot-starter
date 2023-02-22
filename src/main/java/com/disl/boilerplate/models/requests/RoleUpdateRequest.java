@@ -1,14 +1,17 @@
 package com.disl.boilerplate.models.requests;
 
 import com.disl.boilerplate.enums.RoleType;
+import jakarta.validation.constraints.NotBlank;
 
 public class RoleUpdateRequest {
 
 	private long id;
-	private String roleName;
 	private long[] previlegeId;
 	private RoleType roleType;
 	private String description;
+
+	@NotBlank
+	private String roleName;
 
 	public long getId() {
 		return id;

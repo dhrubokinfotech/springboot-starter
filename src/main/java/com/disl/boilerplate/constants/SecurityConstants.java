@@ -8,21 +8,22 @@ public class SecurityConstants {
 	public static final String SECRET = "2034f6e32958647fdff75d265b455ebf2034f6e32958647fdff75d265b455ebf2034f6e32958647fdff75d265b455ebf";
 
 	public static final String[] JWTDisabledAntMatchers = {
-			"/swagger-ui/**",
-            "/swagger-ui.html",
-			"/signin",
-			"/signup",
 			"/resetpassword/**",
 			"/pass-reset",
-			"/forgetpassword",
+			"/api/signin",
+			"/api/signup",
+			"/api/forgetpassword",
 			"/api-documentation.html",
+			"/swagger-ui/**",
 			"/api-docs/**",
-			"/verify/**",
+			"/api/verify/**",
 			"/v2/api-docs",
-            "/configuration/ui",
-            "/swagger-resources/**",
-            "/configuration/security",
+			"/configuration/ui",
+			"/swagger-resources/**",
+			"/configuration/security",
+			"/swagger-ui.html",
 			"/webjars/**",
-			"/refreshtoken"
+			"/api/oauth2/**",
+			"/api/refreshtoken",
 	};
 }

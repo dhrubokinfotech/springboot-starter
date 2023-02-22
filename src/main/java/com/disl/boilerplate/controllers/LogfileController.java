@@ -1,31 +1,29 @@
 package com.disl.boilerplate.controllers;
 
 import ch.qos.logback.classic.LoggerContext;
+import com.disl.boilerplate.models.Response;
 import com.disl.boilerplate.models.responses.ApplicationLog;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.annotations.Authorization;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.support.PagedListHolder;
 import org.springframework.core.io.ByteArrayResource;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.util.FileSystemUtils;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -33,105 +31,152 @@ import java.util.List;
 import static com.disl.boilerplate.BoilerplateApplication.logger;
 
 @RestController
-@RequestMapping("/logging")
+@RequestMapping("/api/log-file")
 public class LogfileController {
 
-	@ApiOperation(value = "Get all log files from the file system", authorizations = {@Authorization(value = "jwtToken")})
-	@ApiResponses(value = {
+    @ApiOperation(value = "Get all log files from the file system", authorizations = {@Authorization(value = "jwtToken")})
+    @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Success", response = ApplicationLog.class),
             @ApiResponse(code = 401, message = "Unauthorized"),
             @ApiResponse(code = 403, message="Forbidden"),
             @ApiResponse(code = 404, message = "Not Found"),
             @ApiResponse(code = 500, message = "Failure")
     })
-	@PreAuthorize("hasPermission(null, 'USER', 'READ')")
-	@GetMapping("/logfiles")
-    public Page<ApplicationLog> getLog(
-    		@RequestParam(name = "pageNo", defaultValue = "0") int pageNo,
+    @PreAuthorize("hasAuthority('LOG_READ')")
+    @GetMapping("/logfiles")
+    public ResponseEntity<Response> getLog(
+            @RequestParam(name = "pageNo", defaultValue = "0") int pageNo,
             @RequestParam(name = "pageSize", defaultValue = "10") int pageSize,
             @RequestParam(name = "keyword", defaultValue = "") String keyword
     ) {
         List<File> files = new ArrayList<>();
-        this.listf(getLogFilePath(), files);
-
-        List<ApplicationLog> applicationLogs = new ArrayList<>();
+        this.generateFileList(getLogFilePath(), files);
+        List<ApplicationLog> prWireLogList = new ArrayList<>();
 
         if (keyword != null && keyword.length() > 0) {
-            for (File f : files) {
-                if (f.getName().contains(keyword) && !f.isDirectory()) {
-                	ApplicationLog applicationLog = new ApplicationLog();
-                	applicationLog.setFileName(f.getName());
-                    Date d = new Date(f.lastModified());
-                    applicationLog.setLastModified(d);
-                    applicationLogs.add(applicationLog);
+            for (File file : files) {
+                if (file.getName().contains(keyword) && !file.isDirectory()) {
+                    ApplicationLog prWireLog = new ApplicationLog();
+                    prWireLog.setFileName(file.getName());
+                    Date date = new Date(file.lastModified());
+                    prWireLog.setLastModified(date);
+                    prWireLog.setFileSize(getReadableFileSize(file.length()));
+                    prWireLogList.add(prWireLog);
                 }
             }
         } else {
-            for (File f : files) {
-            	ApplicationLog applicationLog = new ApplicationLog();
-            	applicationLog.setFileName(f.getName());
-                Date d = new Date(f.lastModified());
-                applicationLog.setLastModified(d);
-                applicationLogs.add(applicationLog);
+            for (File file : files) {
+                ApplicationLog prWireLog = new ApplicationLog();
+                prWireLog.setFileName(file.getName());
+                Date date = new Date(file.lastModified());
+                prWireLog.setLastModified(date);
+                prWireLog.setFileSize(getReadableFileSize(file.length()));
+                prWireLogList.add(prWireLog);
             }
         }
+        prWireLogList.sort((log1, log2) -> log2.getLastModified().compareTo(log1.getLastModified()));
 
-        applicationLogs.sort((o1, o2) -> o2.getLastModified().compareTo(o1.getLastModified()));
+        int logSize = prWireLogList.size();
+        int totalPages = logSize / pageSize;
+        PageRequest pageable = PageRequest.of(pageNo, pageSize);
 
-        PagedListHolder<ApplicationLog> pageHolder = new PagedListHolder<>(applicationLogs);
-        pageHolder.setPageSize(pageSize);
-        pageHolder.setPage(pageNo);
-        Pageable paging = PageRequest.of(pageNo, pageSize);
-        return new PageImpl<>(pageHolder.getPageList(), paging, applicationLogs.size());
+        int max = pageNo >= totalPages ? logSize : (pageSize * (pageNo + 1));
+        int min = pageNo > totalPages ? max : (pageSize * pageNo);
+
+        return Response.getResponseEntity(true, "Log files loaded",
+                new PageImpl<>(prWireLogList.subList(min, max), pageable, logSize)
+        );
     }
 
-    public void listf(String directoryName, List<File> files) {
-        File directory = new File(directoryName);
-        File[] fList = directory.listFiles();
-        if (fList != null) {
-            for (File file : fList) {
-                if (file.isFile()) {
-                    files.add(file);
-                } else if (file.isDirectory()) {
-                    listf(file.getAbsolutePath(), files);
+    @ApiOperation(value = "Download a log file with fileName like fileName=logfile-2021-04-22.0.log - {admin}",
+            authorizations = { @Authorization(value="jwtToken") })
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "Success", response = ResponseEntity.class)})
+    @PreAuthorize("hasAuthority('LOG_WRITE')")
+    @GetMapping("/download")
+    public ResponseEntity<?> downloadFile(@RequestParam(name = "fileName") String fileName, @RequestParam(name = "userAuthId") long userAuthId) {
+        try {
+            List<File> files = new ArrayList<>();
+            this.generateFileList(getLogFilePath(), files);
+            String absolutePath = "";
+
+            for (File file : files) {
+                if (file.getName().contentEquals(fileName)) {
+                    absolutePath = file.getAbsolutePath();
+                    break;
                 }
             }
+
+            if (absolutePath.isEmpty()) return new ResponseEntity<>(new Response(HttpStatus.BAD_REQUEST,
+                    false, "No file found with this file name", null), HttpStatus.OK);
+
+            byte[] array = Files.readAllBytes(Paths.get(absolutePath));
+            return ResponseEntity.ok().contentType(MediaType.parseMediaType("text/plain"))
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileName + "\"")
+                    .body(new ByteArrayResource(array));
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(new Response(HttpStatus.BAD_REQUEST, false,
+                    "Something went wrong: " + e.getMessage(), null), HttpStatus.OK);
         }
     }
 
-    @ApiOperation(value = "Download a log file from the file system", authorizations = {@Authorization(value = "jwtToken")})
-	@ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Success", response = ResponseEntity.class),
-            @ApiResponse(code = 401, message = "Unauthorized"),
-            @ApiResponse(code = 403, message="Forbidden"),
-            @ApiResponse(code = 404, message = "Not Found"),
-            @ApiResponse(code = 500, message = "Failure")
-    })
-    @PreAuthorize("hasPermission(null, 'USER', 'READ')")
-    @GetMapping("/download-log")
-    public ResponseEntity<?> downloadFile(@RequestParam(name = "fileName") String fileName) throws Exception {
-        try {
-			List<File> files = new ArrayList<>();
-			this.listf(getLogFilePath(), files);
+    @ApiOperation(value = "Delete a log file by fileName except main file(logfile.log) - {admin}",
+            authorizations = { @Authorization(value="jwtToken") })
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "Success", response = Response.class)})
+    @PreAuthorize("hasAuthority('LOG_WRITE')")
+    @DeleteMapping("/delete")
+    public Response deleteFile(@RequestParam(name = "fileName") String fileName, @RequestParam(name = "userAuthId") long userAuthId) {
+        Response response = new Response(HttpStatus.BAD_REQUEST, false, "file not deleted", false);
+        List<File> files = new ArrayList<>();
+        this.generateFileList(getLogFilePath(), files);
 
-            String absPath = "";
-			for (File f : files) {
-				if (f.getName().contentEquals(fileName)) {
-					absPath = f.getAbsolutePath();
-					break;
-				}
-			}
-
-            byte[] array = Files.readAllBytes(Paths.get(absPath));
-			return ResponseEntity.ok().contentType(MediaType.parseMediaType("text/plain"))
-					.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileName + ".log" + "\"")
-					.body(new ByteArrayResource(array));
-        	
-        } catch (IOException e) {
-            System.out.println("An error occurred.");
-            e.printStackTrace();
-            throw e;
+        String absolutePath = "";
+        for (File file : files) {
+            if (file.getName().contentEquals(fileName)) {
+                absolutePath = file.getAbsolutePath();
+                break;
+            }
         }
+
+        if (absolutePath.isEmpty()) {
+            response.setMessage("No file found with this file name");
+            return response;
+        }
+
+        File file = new File(absolutePath);
+        if (file.getName().equals("logfile.log")) {
+            response.setMessage("You can not delete the main logfile. Try to delete older log file");
+            return response;
+        }
+
+        if (FileSystemUtils.deleteRecursively(file.getParentFile())) {
+            response.setSuccess(true);
+            response.setPayload(true);
+            response.setStatus(HttpStatus.OK);
+            response.setMessage("log file deleted");
+        }
+
+        return response;
+    }
+
+    private void generateFileList(String directoryName, List<File> files) {
+        File directory = new File(directoryName);
+        File[] fileList = directory.listFiles();
+
+        if (fileList != null) {
+            for (File file : fileList) {
+                if (file.isDirectory()) generateFileList(file.getAbsolutePath(), files);
+                else if (file.isFile()) files.add(file);
+            }
+        }
+    }
+
+    public String getReadableFileSize(long size) {
+        if (size <= 0) return "0";
+        final String[] units = new String[] {"B", "KB", "MB", "GB", "TB"};
+        int digitGroups = (int) (Math.log10(size) / Math.log10(1024));
+        return new DecimalFormat("#,##0.#").format(size / Math.pow(1024.0, digitGroups)) + " " + units[digitGroups];
     }
 
     private String getLogFilePath() {

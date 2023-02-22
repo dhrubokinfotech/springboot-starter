@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.http.converter.HttpMessageNotWritableException;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.HttpMediaTypeNotAcceptableException;
 import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
@@ -23,11 +25,45 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import springfox.documentation.annotations.ApiIgnore;
 
 import java.sql.SQLException;
+import java.util.Optional;
 
 @Order(Ordered.HIGHEST_PRECEDENCE)
 @ControllerAdvice
 @ApiIgnore
 public class ExceptionHandlingController extends ResponseEntityExceptionHandler {
+
+	@ResponseBody
+	@ExceptionHandler(NotFoundException.class)
+	public ResponseEntity<Object> handleNotFoundException(NotFoundException e) {
+		String className = e.getClassName().getSimpleName();
+
+		Response errorResponse = new Response(HttpStatus.BAD_REQUEST, false,  "No " + className.toLowerCase() + " found with this id", null);
+		return buildResponseEntity(errorResponse);
+	}
+
+	@ResponseBody
+	@ExceptionHandler(ResponseException.class)
+	public ResponseEntity<Object> handleResponseException(ResponseException e) {
+		Object payload = e.getPayload();
+		HttpStatus httpStatus = e.getHttpStatus();
+
+		Response errorResponse = new Response(httpStatus != null ? httpStatus :  HttpStatus.BAD_REQUEST, false, e.getMessage(), payload);
+		return buildResponseEntity(errorResponse);
+	}
+
+	@Override
+	protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException e, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
+		Response errorResponse = new Response(status, false, "Invalid request body.", null);
+		Optional<ObjectError> objectError = e.getBindingResult().getAllErrors().stream().findFirst();
+
+		if(objectError.isPresent()) {
+			ObjectError error = objectError.get();
+			errorResponse.setMessage(((FieldError) error).getField() + " field " + error.getDefaultMessage());
+			return buildResponseEntity(errorResponse);
+		}
+
+		return buildResponseEntity(errorResponse);
+	}
 
 	@Override
 	protected ResponseEntity<Object> handleHttpMessageNotReadable(
@@ -79,15 +115,6 @@ public class ExceptionHandlingController extends ResponseEntityExceptionHandler 
 			HttpStatusCode status, WebRequest request
 	) {
 		return buildResponseEntity((new Response(status, false, "Server Error Occurred.", ex.getLocalizedMessage())));
-	}
-
-	@Override
-	protected ResponseEntity<Object> handleMethodArgumentNotValid(
-			MethodArgumentNotValidException ex, HttpHeaders headers,
-			HttpStatusCode status, WebRequest request
-	) {
-		return buildResponseEntity(
-				(new Response(status, false, "Request Failed. Please Try again.", ex.getLocalizedMessage())));
 	}
 
 	@Override

@@ -12,9 +12,9 @@ import java.util.Optional;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long>, JpaSpecificationExecutor<User> {
 	
-	Optional<User> findByEmail(String email);
-	Optional<User> findByPasswordResetToken (String token);
 	List<User> findByRoles(Role role);
 	List<User> findByRolesIn(Role[] roles);
-	
+	Optional<User> findTopByEmail(String email);
+	Optional<User> findByPasswordResetToken (String token);
+
 }

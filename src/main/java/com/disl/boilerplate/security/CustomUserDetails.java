@@ -22,7 +22,7 @@ public class CustomUserDetails implements UserDetails {
 	private Collection<? extends GrantedAuthority> authorities;
 
 	private CustomUserDetails(
-			Long id, String email, String name, String password, boolean verified,
+			Long id, String email, String name, String password, Boolean verified,
 			Set<Role> roles, Collection<? extends GrantedAuthority> authorities
 	) {
 		super();

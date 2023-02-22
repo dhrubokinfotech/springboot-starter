@@ -12,6 +12,7 @@ public final class AppTables {
 		public static final String id = "ID";
 		public static final String email = "EMAIL";
 		public static final String name = "name";
+		public static final String banned = "banned";
 		public static final String verified = "verified";
 		public static final String password = "PASSWORD";
 		public static final String passwordResetToken = "PASSWORD_RESET_TOKEN";

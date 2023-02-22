@@ -1,7 +1,7 @@
 package com.disl.boilerplate.config;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -20,12 +20,14 @@ import java.util.List;
 @EnableSwagger2
 public class SwaggerConfig implements WebMvcConfigurer {
 
+    @Value("${app.name}")
+    private String appName;
+
     @Autowired
     private AppProperties appProperties;
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-
         registry
                 .addResourceHandler("swagger-ui.html")
                 .addResourceLocations("classpath:/META-INF/resources/");
@@ -53,10 +55,10 @@ public class SwaggerConfig implements WebMvcConfigurer {
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("BoilerPlate API")
-                .description("BoilerPlate API")
+                .title(appName + " API")
+                .description(appName + " API Documentation")
                 .version("Version 1.0.0")
-                .licenseUrl("https://boilerplate.com/")
+                .licenseUrl(appProperties.getSwaggerBackendUrl())
                 .build();
     }
 }

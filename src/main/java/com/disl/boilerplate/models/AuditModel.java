@@ -1,8 +1,6 @@
 package com.disl.boilerplate.models;
 
-import java.time.LocalDateTime;
-import java.time.OffsetDateTime;
-
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.MappedSuperclass;
 import org.springframework.data.annotation.CreatedBy;
@@ -10,7 +8,9 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import com.fasterxml.jackson.annotation.JsonFormat;
+
+import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
@@ -29,7 +29,7 @@ public abstract class AuditModel<U> {
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
 	@LastModifiedDate
 	protected LocalDateTime lastModifiedDate;
-	
+
 	@JsonFormat(shape=JsonFormat.Shape.NUMBER, pattern="s")
 	public Long getCreationDateTimeStamp() {
 		if (creationDate == null) {
@@ -38,7 +38,7 @@ public abstract class AuditModel<U> {
 			return this.creationDate.toEpochSecond(OffsetDateTime.now().getOffset());
 		}
 	}
-	
+
 	@JsonFormat(shape=JsonFormat.Shape.NUMBER, pattern="s")
 	public Long getLastModifiedDateTimeStamp() {
 		if (lastModifiedDate == null) return 0L;

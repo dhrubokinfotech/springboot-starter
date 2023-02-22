@@ -1,11 +1,5 @@
 package com.disl.boilerplate.controllers;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 import com.disl.boilerplate.entities.Privilege;
 import com.disl.boilerplate.models.Response;
 import com.disl.boilerplate.services.PrivilegeService;
@@ -13,10 +7,16 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.annotations.Authorization;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @CrossOrigin()
-@RequestMapping("/privilege")
+@RequestMapping("/api/privilege")
 public class PrivilegeController {
 
 	@Autowired
@@ -29,7 +29,10 @@ public class PrivilegeController {
 	@ApiResponse(code = 404, message = "Not Found"),
 	@ApiResponse(code = 500, message = "Failure")})
 	@GetMapping
-	public Response getAllPrivileges() {
-		return new Response(HttpStatus.OK, true, "Data loaded successfully.", privilegeService.viewAllPrivileges());
+	public ResponseEntity<Response> getAllPrivileges() {
+		return Response.getResponseEntity(
+				true, "Data loaded successfully.",
+				privilegeService.viewAllPrivileges()
+		);
 	}
 }

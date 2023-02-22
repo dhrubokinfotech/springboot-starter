@@ -5,6 +5,7 @@ import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
@@ -23,6 +24,16 @@ public class JwtTokenProvider {
 		Date expiryDate = new Date(now.getTime() + SecurityConstants.EXPIRATION_TIME);
 
 		return Jwts.builder().setSubject(customUserDetails.getUsername())
+				.setIssuedAt(new Date())
+				.setExpiration(expiryDate)
+				.signWith(getSecretKey(), signatureAlgorithm).compact();
+	}
+
+	public String generateToken(UserDetails userDetails) {
+		Date now = new Date();
+		Date expiryDate = new Date(now.getTime() + SecurityConstants.EXPIRATION_TIME);
+
+		return Jwts.builder().setSubject(userDetails.getUsername())
 				.setIssuedAt(new Date())
 				.setExpiration(expiryDate)
 				.signWith(getSecretKey(), signatureAlgorithm).compact();

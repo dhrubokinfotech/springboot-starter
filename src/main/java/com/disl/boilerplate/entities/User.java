@@ -35,7 +35,10 @@ public class User extends AuditModel<String> {
 
 	@Column (name = UserTable.verified)
 	private Boolean verified = false;
-	
+
+	@Column (name = UserTable.banned)
+	private Boolean banned = false;
+
 	@JoinTable(
 		name = AppTables.userRole,
 		joinColumns = @JoinColumn(name = "user_id"),
@@ -93,10 +96,18 @@ public class User extends AuditModel<String> {
 	}
 
 	public Boolean getVerified() {
-		return verified;
+		return verified != null && verified;
 	}
 
 	public void setVerified(Boolean verified) {
 		this.verified = verified;
+	}
+
+	public Boolean getBanned() {
+		return banned != null && banned;
+	}
+
+	public void setBanned(Boolean banned) {
+		this.banned = banned;
 	}
 }

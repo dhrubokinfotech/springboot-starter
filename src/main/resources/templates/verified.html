@@ -15,7 +15,7 @@
     <link rel="icon" href="/Files/favicon.ico" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
 
-    <title>BoilerPlate</title>
+    <title>User verification- Tazkia</title>
 
     <style>
         @import url(https://fonts.googleapis.com/css?family=Poppins&display=swap);
@@ -75,53 +75,53 @@
         .custom {
             width: 100% !important;
         }
-        
+
         .buttonStyle {
-        	background-color: red;
-        	color: white;
-        	padding: .48em .60em;
-        	margin-top: 1.5em;
-        	border-radius: 5px 5px;
+            background-color: red;
+            color: white;
+            padding: .48em .60em;
+            margin-top: 1.5em;
+            border-radius: 5px 5px;
         }
         .mainDiv{
-        	display: flex;
-        	justify-content: center;
+            display: flex;
+            justify-content: center;
         }
-        
+
         .buttonStyle:hover {
-        	padding: .48em .60em;
-        	margin-top: 1.5em;
-        	text-decoration: none;
-        	background-color: red;
-        	color: white;
+            padding: .48em .60em;
+            margin-top: 1.5em;
+            text-decoration: none;
+            background-color: red;
+            color: white;
         }
-        
+
     </style>
 </head>
 
 <body>
-    <div id="app">
-        <main class="login-form">
-            <div class="cotainer">
-                <div class="row justify-content-center">
-                    <div class="col-md-6">
-                        <div class="card">
-                            <div class="card-header" style="background-color: #ED1C24;">Boilerplate</div>
-                            <div class="card-body">
-                                <form action="" method="post" th:action="@{/ssss}" th:object="${messageClass}">
-                                    <div class="form-group row topups mainDiv">
-                                        <label id="message" class="col-form-label text-md-center" th:text="${message}"> Success</label>
-                                        <a class="buttonStyle" href="http://192.168.0.115:8081/user-verified?id=45454"> Open App </a>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
+<div id="app">
+    <main class="login-form">
+        <div class="cotainer">
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header" style="background-color: green;">Tazkia</div>
+                        <div class="card-body">
+                            <form action="" method="post" th:action="@{/ssss}" th:object="${messageClass}">
+                                <div class="form-group row topups mainDiv">
+                                    <label id="message" class="col-form-label text-md-center" th:text="${message}"> Success</label>
+                                    <a class="buttonStyle" href="http://192.168.0.115:8081/user-verified?id=45454"> Open App </a>
+                                </div>
                         </div>
+                        </form>
                     </div>
                 </div>
             </div>
-        </main>
-    </div>
+        </div>
+</div>
+</main>
+</div>
 </body>
 <script>
 

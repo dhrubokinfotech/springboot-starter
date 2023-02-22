@@ -12,14 +12,14 @@ public class AppConstants {
 
 	public static String DEFAULTDATEFORMAT = "dd-MMM-yy";
 
-	public static String USERNAME = "super_admin@disl.com";
-	public static String PASSWORD = "123456";
+	public static String INITIAL_USERNAME = "super_admin@disl.com";
+	public static String INITIAL_PASSWORD = "123456";
 	
-	public static String INITIALROLE = "SUPER ADMIN";
+	public static String INITIAL_ROLE = "SUPER ADMIN";
+	public static String userRole = "USER";
 
 	public static String consumerPermission = "USER";
 	public static String consumerPermissionDesc = "User Generalized Permission";
-	public static String consumerRole = "USER";
 
 	public static String RESET_PASSWORD_SUBURL = "/resetpassword?passResetToken=";
 	public static String VERIFICATION_SUBURL = "/verify?verificationToken=";
@@ -57,6 +57,8 @@ public class AppConstants {
 			put("ROLE_READ", "ROLE READ");
 			put("ROLE_UPDATE", "ROLE UPDATE");
 			put("ROLE_DELETE", "ROLE DELETE");
+
+			put("USER_UPDATE_FROM_ADMIN", "USER UPDATE FROM ADMIN");
 		}
 	};
 }

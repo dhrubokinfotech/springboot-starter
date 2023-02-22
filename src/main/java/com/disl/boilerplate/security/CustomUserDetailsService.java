@@ -1,5 +1,6 @@
 package com.disl.boilerplate.security;
 
+import com.disl.boilerplate.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -8,17 +9,16 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.disl.boilerplate.entities.User;
-import com.disl.boilerplate.services.UserService;
 
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
 
 	@Autowired
-	private UserService loginService;
+	private UserRepository userRepository;
 	
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		User loggedUser = loginService.findByEmail(username);
+		User loggedUser = userRepository.findTopByEmail(username).orElse(null);
 		if (loggedUser == null) {
 			throw new UsernameNotFoundException("User not found with username");
 		}
@@ -27,11 +27,12 @@ public class CustomUserDetailsService implements UserDetailsService {
 	}
 	
 	@Transactional
-    public UserDetails loadUserById(String username) {
-        User user = loginService.findByEmail(username);
+    public UserDetails loadUserById(Long id) {
+        User user = userRepository.findById(id).orElse(null);
 		if (user == null) {
-			throw new UsernameNotFoundException("User not found with username");
+			throw new UsernameNotFoundException("User not found with id : " + id);
 		}
+
         return CustomUserDetails.create(user);
     }
 }
