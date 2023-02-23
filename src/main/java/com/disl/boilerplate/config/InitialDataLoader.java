@@ -18,10 +18,8 @@ import java.util.*;
 
 @Component
 public class InitialDataLoader implements ApplicationListener<ApplicationContextEvent>{
-	private boolean alreadySetup = false;
 
-	@Autowired
-	private PrivilegeService privilegeService;
+	private boolean alreadySetup = false;
 
 	@Autowired
 	private RoleService roleService;
@@ -31,6 +29,9 @@ public class InitialDataLoader implements ApplicationListener<ApplicationContext
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
+
+	@Autowired
+	private PrivilegeService privilegeService;
 
 	@Override
 	public void onApplicationEvent(ApplicationContextEvent event) {

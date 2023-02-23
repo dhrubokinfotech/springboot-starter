@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
 
-  <property scope="context" name="LOG_DIRECTORY" value="/home/ubuntu/logfiles/" />
+    <property scope="context" name="LOG_DIRECTORY" value="${user.home}/logfiles/${LOG_PATH}" />
 
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>

@@ -1,0 +1,316 @@
+[2023-02-23 13:40:08,659][INFO ][org.springframework.boot.StartupInfoLogger][restartedMain][51]Starting BoilerplateApplication using Java 17.0.2 with PID 8205 (/Users/zakaria/Documents/Development/Backend/SpringBoot-Boilerplate/target/classes started by zakaria in /Users/zakaria/Documents/Development/Backend/SpringBoot-Boilerplate)
+[2023-02-23 13:40:08,661][DEBUG][org.springframework.boot.StartupInfoLogger][restartedMain][52]Running with Spring Boot v3.0.2, Spring v6.0.4
+[2023-02-23 13:40:08,661][INFO ][org.springframework.boot.SpringApplication][restartedMain][636]The following 1 profile is active: "development"
+[2023-02-23 13:40:08,688][INFO ][org.springframework.boot.logging.DeferredLog][restartedMain][250]Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+[2023-02-23 13:40:08,688][INFO ][org.springframework.boot.logging.DeferredLog][restartedMain][250]For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+[2023-02-23 13:40:09,189][INFO ][org.springframework.data.repository.config.RepositoryConfigurationDelegate][restartedMain][138]Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+[2023-02-23 13:40:09,233][INFO ][org.springframework.data.repository.config.RepositoryConfigurationDelegate][restartedMain][208]Finished Spring Data repository scanning in 40 ms. Found 4 JPA repository interfaces.
+[2023-02-23 13:40:09,477][INFO ][org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker][restartedMain][409]Bean 'customGlobalMethodSecurityConfig' of type [com.disl.boilerplate.security.CustomGlobalMethodSecurityConfig$$SpringCGLIB$$0] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+[2023-02-23 13:40:09,501][INFO ][org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker][restartedMain][409]Bean 'createExpressionHandler' of type [org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+[2023-02-23 13:40:09,674][INFO ][org.springframework.boot.web.embedded.tomcat.TomcatWebServer][restartedMain][108]Tomcat initialized with port(s): 8081 (http)
+[2023-02-23 13:40:09,678][INFO ][org.apache.juli.logging.DirectJDKLog][restartedMain][173]Initializing ProtocolHandler ["http-nio-8081"]
+[2023-02-23 13:40:09,678][INFO ][org.apache.juli.logging.DirectJDKLog][restartedMain][173]Starting service [Tomcat]
+[2023-02-23 13:40:09,679][INFO ][org.apache.juli.logging.DirectJDKLog][restartedMain][173]Starting Servlet engine: [Apache Tomcat/10.1.5]
+[2023-02-23 13:40:09,718][INFO ][org.apache.juli.logging.DirectJDKLog][restartedMain][173]Initializing Spring embedded WebApplicationContext
+[2023-02-23 13:40:09,719][INFO ][org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext][restartedMain][291]Root WebApplicationContext: initialization completed in 1031 ms
+[2023-02-23 13:40:09,950][INFO ][com.zaxxer.hikari.HikariDataSource][restartedMain][110]HikariPool-1 - Starting...
+[2023-02-23 13:40:09,991][INFO ][com.zaxxer.hikari.pool.HikariPool][restartedMain][565]HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@4cb344e5
+[2023-02-23 13:40:09,992][INFO ][com.zaxxer.hikari.HikariDataSource][restartedMain][123]HikariPool-1 - Start completed.
+[2023-02-23 13:40:10,007][INFO ][org.hibernate.engine.jdbc.dialect.internal.DialectFactoryImpl][restartedMain][66]HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+[2023-02-23 13:40:10,492][INFO ][org.springframework.orm.jpa.AbstractEntityManagerFactoryBean][restartedMain][437]Initialized JPA EntityManagerFactory for persistence unit 'default'
+[2023-02-23 13:40:10,730][DEBUG][org.springframework.web.filter.GenericFilterBean][restartedMain][240]Filter 'jwtAuthenticationFilter' configured for use
+[2023-02-23 13:40:10,730][DEBUG][org.springframework.web.filter.GenericFilterBean][restartedMain][240]Filter 'resourceUrlEncodingFilter' configured for use
+[2023-02-23 13:40:11,167][TRACE][org.springframework.web.servlet.handler.AbstractHandlerMethodMapping][restartedMain][291]
+	c.d.b.c.EntryController:
+	{GET [/api/me]}: getUserInfo()
+	{POST [/api/signup]}: createUser(SignUpRequest)
+	{POST [/api/admin-user-create]}: createAdminUser(AdminCreationRequest)
+	{POST [/api/changepassword]}: changePassword(ChangePasswordRequest)
+	{POST [/api/signin]}: authenticateUser(SignInRequest)
+	{PUT [/api/user/update-banned-status]}: updateBannedStatusManually(UpdateBannedStatusRequest)
+	{PUT [/api/user/update-verify-status]}: updateVerifyStatusManually(UpdateVerifyStatusRequest)
+	{GET [/api/user/all]}: getAllPaginatedUsers(int,int,String,AscOrDescType,Map)
+	{GET [/api/user/id/{userId}]}: findUserById(long)
+	{PUT [/api/update-user-from-admin]}: updateUserInfo(UpdateUserFromAdmin)
+	{PUT [/api/user/info/update]}: updateUserInfo(UpdateUserInfoRequest)
+	{POST [/api/forgetpassword]}: requestForgetPassword(InitialForgetPasswordRequest)
+	{POST [/api/refreshtoken]}: refreshtoken(RefreshTokenRequest)
+	{GET [/api/oauth2/login]}: socialLogin(SocialAuthType,String)
+[2023-02-23 13:40:11,169][TRACE][org.springframework.web.servlet.handler.AbstractHandlerMethodMapping][restartedMain][291]
+	c.d.b.c.LogfileController:
+	{GET [/api/log-file/download]}: downloadFile(String)
+	{DELETE [/api/log-file/delete]}: deleteFile(String,long)
+	{GET [/api/log-file/logfiles]}: getLog(int,int,String)
+[2023-02-23 13:40:11,170][TRACE][org.springframework.web.servlet.handler.AbstractHandlerMethodMapping][restartedMain][291]
+	c.d.b.c.PrivilegeController:
+	{GET [/api/privilege]}: getAllPrivileges()
+[2023-02-23 13:40:11,171][TRACE][org.springframework.web.servlet.handler.AbstractHandlerMethodMapping][restartedMain][291]
+	c.d.b.c.RoleController:
+	{POST [/api/role/create]}: createRole(RoleCreateRequest)
+	{DELETE [/api/role/{roleId}]}: deleteRole(long)
+	{PUT [/api/role/update]}: updateRole(RoleUpdateRequest)
+	{GET [/api/role/users]}: getUserRoles(String)
+	{GET [/api/role/types]}: getRoleTypes()
+	{GET [/api/role/all]}: getPaginatedRoles(int,int,String,AscOrDescType,Map)
+	{GET [/api/role/total]}: getTotalRoles(String)
+	{GET [/api/role/{id}]}: getRoleById(long)
+[2023-02-23 13:40:11,172][TRACE][org.springframework.web.servlet.handler.AbstractHandlerMethodMapping][restartedMain][291]
+	c.d.b.c.t.ForgetPasswordController:
+	{GET [/resetpassword], produces [text/html]}: resetPasswordHTML(Model,String)
+	{POST [/pass-reset], produces [text/html]}: resetPass(ForgetPassRequest,BindingResult,Model)
+[2023-02-23 13:40:11,173][TRACE][org.springframework.web.servlet.handler.AbstractHandlerMethodMapping][restartedMain][291]
+	o.s.b.a.w.s.e.BasicErrorController:
+	{ [/error]}: error(HttpServletRequest)
+	{ [/error], produces [text/html]}: errorHtml(HttpServletRequest,HttpServletResponse)
+[2023-02-23 13:40:11,180][TRACE][org.springframework.web.servlet.handler.AbstractHandlerMethodMapping][restartedMain][291]
+	o.s.w.a.OpenApiWebMvcResource:
+	{GET [/v3/api-docs], produces [application/json]}: openapiJson(HttpServletRequest,String,Locale)
+	{GET [/v3/api-docs.yaml], produces [application/vnd.oai.openapi]}: openapiYaml(HttpServletRequest,String,Locale)
+[2023-02-23 13:40:11,181][TRACE][org.springframework.web.servlet.handler.AbstractHandlerMethodMapping][restartedMain][291]
+	o.s.w.u.SwaggerWelcomeWebMvc:
+	{GET [/swagger-ui.html]}: redirectToUi(HttpServletRequest)
+[2023-02-23 13:40:11,181][TRACE][org.springframework.web.servlet.handler.AbstractHandlerMethodMapping][restartedMain][291]
+	o.s.w.u.SwaggerConfigResource:
+	{GET [/v3/api-docs/swagger-config], produces [application/json]}: openapiJson(HttpServletRequest)
+[2023-02-23 13:40:11,183][DEBUG][org.springframework.web.servlet.handler.AbstractHandlerMethodMapping][restartedMain][366]34 mappings in 'requestMappingHandlerMapping'
+[2023-02-23 13:40:11,198][DEBUG][org.springframework.web.servlet.handler.AbstractDetectingUrlHandlerMapping][restartedMain][89]Detected 0 mappings in 'beanNameHandlerMapping'
+[2023-02-23 13:40:11,218][TRACE][org.springframework.web.servlet.function.support.RouterFunctionMapping][restartedMain][175]0 RouterFunction(s) in 'routerFunctionMapping'
+[2023-02-23 13:40:11,223][DEBUG][org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguration$WebMvcAutoConfigurationAdapter][restartedMain][323]Default resource handling disabled
+[2023-02-23 13:40:11,351][TRACE][org.springframework.web.servlet.handler.AbstractUrlHandlerMapping][restartedMain][452]Mapped [/swagger-ui*/*swagger-initializer.js] onto ResourceHttpRequestHandler [classpath [META-INF/resources/webjars/]]
+[2023-02-23 13:40:11,351][TRACE][org.springframework.web.servlet.handler.AbstractUrlHandlerMapping][restartedMain][452]Mapped [/swagger-ui*/**] onto ResourceHttpRequestHandler [classpath [META-INF/resources/webjars/]]
+[2023-02-23 13:40:11,352][DEBUG][org.springframework.web.servlet.handler.SimpleUrlHandlerMapping][restartedMain][187]Patterns [/swagger-ui*/*swagger-initializer.js, /swagger-ui*/**] in 'resourceHandlerMapping'
+[2023-02-23 13:40:11,406][INFO ][org.springframework.security.web.access.channel.ChannelProcessingFilter][restartedMain][106]Validated configuration attributes
+[2023-02-23 13:40:11,409][INFO ][org.springframework.security.web.DefaultSecurityFilterChain][restartedMain][54]Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@2635466e, org.springframework.security.web.access.channel.ChannelProcessingFilter@43fd3496, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@27c03231, org.springframework.security.web.context.SecurityContextHolderFilter@28a2c16a, org.springframework.security.web.header.HeaderWriterFilter@4ebfa873, org.springframework.security.web.authentication.logout.LogoutFilter@5672f625, com.disl.boilerplate.security.JwtAuthenticationFilter$$SpringCGLIB$$0@4660b81b, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@4e30a1e1, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@ff0d704, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@475e2cc3, org.springframework.security.web.session.SessionManagementFilter@26e087b5, org.springframework.security.web.access.ExceptionTranslationFilter@555403e2, org.springframework.security.web.access.intercept.AuthorizationFilter@45aafdf9]
+[2023-02-23 13:40:11,482][DEBUG][org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter][restartedMain][614]ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+[2023-02-23 13:40:11,506][DEBUG][org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver][restartedMain][292]ControllerAdvice beans: 4 @ExceptionHandler, 1 ResponseBodyAdvice
+[2023-02-23 13:40:11,689][INFO ][org.springframework.boot.devtools.autoconfigure.OptionalLiveReloadServer][restartedMain][59]LiveReload server is running on port 35729
+[2023-02-23 13:40:11,703][INFO ][org.apache.juli.logging.DirectJDKLog][restartedMain][173]Starting ProtocolHandler ["http-nio-8081"]
+[2023-02-23 13:40:11,716][INFO ][org.springframework.boot.web.embedded.tomcat.TomcatWebServer][restartedMain][220]Tomcat started on port(s): 8081 (http) with context path ''
+[2023-02-23 13:40:11,724][INFO ][com.disl.boilerplate.config.InitialDataLoader][restartedMain][44]Logfile path
+
+
+
+ => logging.file.path_IS_UNDEFINED
+[2023-02-23 13:40:11,726][DEBUG][com.disl.boilerplate.config.LoggingAspect][restartedMain][59]Enter: com.disl.boilerplate.services.PrivilegeService.findByPrivilegeName() with argument[s] = [ROLE_CREATE]
+[2023-02-23 13:40:11,786][DEBUG][com.disl.boilerplate.config.LoggingAspect][restartedMain][68]Exit: com.disl.boilerplate.services.PrivilegeService.findByPrivilegeName() with result = com.disl.boilerplate.entities.Privilege@2f5547bf
+[2023-02-23 13:40:11,786][DEBUG][com.disl.boilerplate.config.LoggingAspect][restartedMain][59]Enter: com.disl.boilerplate.services.PrivilegeService.findByPrivilegeName() with argument[s] = [ROLE_UPDATE]
+[2023-02-23 13:40:11,788][DEBUG][com.disl.boilerplate.config.LoggingAspect][restartedMain][68]Exit: com.disl.boilerplate.services.PrivilegeService.findByPrivilegeName() with result = com.disl.boilerplate.entities.Privilege@5c3b2768
+[2023-02-23 13:40:11,788][DEBUG][com.disl.boilerplate.config.LoggingAspect][restartedMain][59]Enter: com.disl.boilerplate.services.PrivilegeService.findByPrivilegeName() with argument[s] = [ROLE_DELETE]
+[2023-02-23 13:40:11,789][DEBUG][com.disl.boilerplate.config.LoggingAspect][restartedMain][68]Exit: com.disl.boilerplate.services.PrivilegeService.findByPrivilegeName() with result = com.disl.boilerplate.entities.Privilege@58f96c79
+[2023-02-23 13:40:11,789][DEBUG][com.disl.boilerplate.config.LoggingAspect][restartedMain][59]Enter: com.disl.boilerplate.services.PrivilegeService.findByPrivilegeName() with argument[s] = [USER_DELETE]
+[2023-02-23 13:40:11,790][DEBUG][com.disl.boilerplate.config.LoggingAspect][restartedMain][68]Exit: com.disl.boilerplate.services.PrivilegeService.findByPrivilegeName() with result = com.disl.boilerplate.entities.Privilege@13f220f9
+[2023-02-23 13:40:11,791][DEBUG][com.disl.boilerplate.config.LoggingAspect][restartedMain][59]Enter: com.disl.boilerplate.services.PrivilegeService.findByPrivilegeName() with argument[s] = [USER_CREATE]
+[2023-02-23 13:40:11,792][DEBUG][com.disl.boilerplate.config.LoggingAspect][restartedMain][68]Exit: com.disl.boilerplate.services.PrivilegeService.findByPrivilegeName() with result = com.disl.boilerplate.entities.Privilege@9057f59
+[2023-02-23 13:40:11,792][DEBUG][com.disl.boilerplate.config.LoggingAspect][restartedMain][59]Enter: com.disl.boilerplate.services.PrivilegeService.findByPrivilegeName() with argument[s] = [USER_UPDATE]
+[2023-02-23 13:40:11,794][DEBUG][com.disl.boilerplate.config.LoggingAspect][restartedMain][68]Exit: com.disl.boilerplate.services.PrivilegeService.findByPrivilegeName() with result = com.disl.boilerplate.entities.Privilege@66144a1e
+[2023-02-23 13:40:11,794][DEBUG][com.disl.boilerplate.config.LoggingAspect][restartedMain][59]Enter: com.disl.boilerplate.services.PrivilegeService.findByPrivilegeName() with argument[s] = [GENERAL]
+[2023-02-23 13:40:11,795][DEBUG][com.disl.boilerplate.config.LoggingAspect][restartedMain][68]Exit: com.disl.boilerplate.services.PrivilegeService.findByPrivilegeName() with result = com.disl.boilerplate.entities.Privilege@537c5b18
+[2023-02-23 13:40:11,796][DEBUG][com.disl.boilerplate.config.LoggingAspect][restartedMain][59]Enter: com.disl.boilerplate.services.PrivilegeService.findByPrivilegeName() with argument[s] = [USER_READ]
+[2023-02-23 13:40:11,797][DEBUG][com.disl.boilerplate.config.LoggingAspect][restartedMain][68]Exit: com.disl.boilerplate.services.PrivilegeService.findByPrivilegeName() with result = com.disl.boilerplate.entities.Privilege@d7981fa
+[2023-02-23 13:40:11,797][DEBUG][com.disl.boilerplate.config.LoggingAspect][restartedMain][59]Enter: com.disl.boilerplate.services.PrivilegeService.findByPrivilegeName() with argument[s] = [ROLE_READ]
+[2023-02-23 13:40:11,798][DEBUG][com.disl.boilerplate.config.LoggingAspect][restartedMain][68]Exit: com.disl.boilerplate.services.PrivilegeService.findByPrivilegeName() with result = com.disl.boilerplate.entities.Privilege@418067e8
+[2023-02-23 13:40:11,798][DEBUG][com.disl.boilerplate.config.LoggingAspect][restartedMain][59]Enter: com.disl.boilerplate.services.PrivilegeService.findByPrivilegeName() with argument[s] = [USER_UPDATE_FROM_ADMIN]
+[2023-02-23 13:40:11,799][DEBUG][com.disl.boilerplate.config.LoggingAspect][restartedMain][68]Exit: com.disl.boilerplate.services.PrivilegeService.findByPrivilegeName() with result = com.disl.boilerplate.entities.Privilege@54152c57
+[2023-02-23 13:40:11,800][DEBUG][com.disl.boilerplate.config.LoggingAspect][restartedMain][59]Enter: com.disl.boilerplate.services.PrivilegeService.findByPrivilegeName() with argument[s] = [SUPER ADMIN]
+[2023-02-23 13:40:11,801][DEBUG][com.disl.boilerplate.config.LoggingAspect][restartedMain][68]Exit: com.disl.boilerplate.services.PrivilegeService.findByPrivilegeName() with result = null
+[2023-02-23 13:40:11,801][DEBUG][com.disl.boilerplate.config.LoggingAspect][restartedMain][59]Enter: com.disl.boilerplate.services.RoleService.findRoleByName() with argument[s] = [SUPER ADMIN]
+[2023-02-23 13:40:11,813][DEBUG][com.disl.boilerplate.config.LoggingAspect][restartedMain][68]Exit: com.disl.boilerplate.services.RoleService.findRoleByName() with result = com.disl.boilerplate.entities.Role@5034b0e9
+[2023-02-23 13:40:11,813][DEBUG][com.disl.boilerplate.config.LoggingAspect][restartedMain][59]Enter: com.disl.boilerplate.services.RoleService.saveRole() with argument[s] = [com.disl.boilerplate.entities.Role@5034b0e9]
+[2023-02-23 13:40:11,835][DEBUG][com.disl.boilerplate.config.LoggingAspect][restartedMain][68]Exit: com.disl.boilerplate.services.RoleService.saveRole() with result = com.disl.boilerplate.entities.Role@7affa0e5
+[2023-02-23 13:40:11,835][DEBUG][com.disl.boilerplate.config.LoggingAspect][restartedMain][59]Enter: com.disl.boilerplate.services.UserService.findByEmail() with argument[s] = [super_admin@disl.com]
+[2023-02-23 13:40:11,842][DEBUG][com.disl.boilerplate.config.LoggingAspect][restartedMain][68]Exit: com.disl.boilerplate.services.UserService.findByEmail() with result = com.disl.boilerplate.entities.User@3a3672be
+[2023-02-23 13:40:11,844][INFO ][org.springframework.boot.StartupInfoLogger][restartedMain][57]Started BoilerplateApplication in 3.426 seconds (process running for 8.803)
+[2023-02-23 13:40:32,062][INFO ][com.disl.boilerplate.config.InitialDataLoader][SpringApplicationShutdownHook][44]Logfile path
+
+
+
+ => logging.file.path_IS_UNDEFINED
+[2023-02-23 13:40:32,062][DEBUG][com.disl.boilerplate.config.LoggingAspect][SpringApplicationShutdownHook][59]Enter: com.disl.boilerplate.services.PrivilegeService.findByPrivilegeName() with argument[s] = [ROLE_CREATE]
+[2023-02-23 13:40:32,064][DEBUG][com.disl.boilerplate.config.LoggingAspect][SpringApplicationShutdownHook][68]Exit: com.disl.boilerplate.services.PrivilegeService.findByPrivilegeName() with result = com.disl.boilerplate.entities.Privilege@478c4e50
+[2023-02-23 13:40:32,065][DEBUG][com.disl.boilerplate.config.LoggingAspect][SpringApplicationShutdownHook][59]Enter: com.disl.boilerplate.services.PrivilegeService.findByPrivilegeName() with argument[s] = [ROLE_UPDATE]
+[2023-02-23 13:40:32,066][DEBUG][com.disl.boilerplate.config.LoggingAspect][SpringApplicationShutdownHook][68]Exit: com.disl.boilerplate.services.PrivilegeService.findByPrivilegeName() with result = com.disl.boilerplate.entities.Privilege@17520c04
+[2023-02-23 13:40:32,066][DEBUG][com.disl.boilerplate.config.LoggingAspect][SpringApplicationShutdownHook][59]Enter: com.disl.boilerplate.services.PrivilegeService.findByPrivilegeName() with argument[s] = [ROLE_DELETE]
+[2023-02-23 13:40:32,068][DEBUG][com.disl.boilerplate.config.LoggingAspect][SpringApplicationShutdownHook][68]Exit: com.disl.boilerplate.services.PrivilegeService.findByPrivilegeName() with result = com.disl.boilerplate.entities.Privilege@2fe99b59
+[2023-02-23 13:40:32,068][DEBUG][com.disl.boilerplate.config.LoggingAspect][SpringApplicationShutdownHook][59]Enter: com.disl.boilerplate.services.PrivilegeService.findByPrivilegeName() with argument[s] = [USER_DELETE]
+[2023-02-23 13:40:32,070][DEBUG][com.disl.boilerplate.config.LoggingAspect][SpringApplicationShutdownHook][68]Exit: com.disl.boilerplate.services.PrivilegeService.findByPrivilegeName() with result = com.disl.boilerplate.entities.Privilege@4b5d2199
+[2023-02-23 13:40:32,070][DEBUG][com.disl.boilerplate.config.LoggingAspect][SpringApplicationShutdownHook][59]Enter: com.disl.boilerplate.services.PrivilegeService.findByPrivilegeName() with argument[s] = [USER_CREATE]
+[2023-02-23 13:40:32,071][DEBUG][com.disl.boilerplate.config.LoggingAspect][SpringApplicationShutdownHook][68]Exit: com.disl.boilerplate.services.PrivilegeService.findByPrivilegeName() with result = com.disl.boilerplate.entities.Privilege@5a60404a
+[2023-02-23 13:40:32,071][DEBUG][com.disl.boilerplate.config.LoggingAspect][SpringApplicationShutdownHook][59]Enter: com.disl.boilerplate.services.PrivilegeService.findByPrivilegeName() with argument[s] = [USER_UPDATE]
+[2023-02-23 13:40:32,073][DEBUG][com.disl.boilerplate.config.LoggingAspect][SpringApplicationShutdownHook][68]Exit: com.disl.boilerplate.services.PrivilegeService.findByPrivilegeName() with result = com.disl.boilerplate.entities.Privilege@2c37aec8
+[2023-02-23 13:40:32,073][DEBUG][com.disl.boilerplate.config.LoggingAspect][SpringApplicationShutdownHook][59]Enter: com.disl.boilerplate.services.PrivilegeService.findByPrivilegeName() with argument[s] = [GENERAL]
+[2023-02-23 13:40:32,074][DEBUG][com.disl.boilerplate.config.LoggingAspect][SpringApplicationShutdownHook][68]Exit: com.disl.boilerplate.services.PrivilegeService.findByPrivilegeName() with result = com.disl.boilerplate.entities.Privilege@23885792
+[2023-02-23 13:40:32,074][DEBUG][com.disl.boilerplate.config.LoggingAspect][SpringApplicationShutdownHook][59]Enter: com.disl.boilerplate.services.PrivilegeService.findByPrivilegeName() with argument[s] = [USER_READ]
+[2023-02-23 13:40:32,075][DEBUG][com.disl.boilerplate.config.LoggingAspect][SpringApplicationShutdownHook][68]Exit: com.disl.boilerplate.services.PrivilegeService.findByPrivilegeName() with result = com.disl.boilerplate.entities.Privilege@190e37e5
+[2023-02-23 13:40:32,075][DEBUG][com.disl.boilerplate.config.LoggingAspect][SpringApplicationShutdownHook][59]Enter: com.disl.boilerplate.services.PrivilegeService.findByPrivilegeName() with argument[s] = [ROLE_READ]
+[2023-02-23 13:40:32,077][DEBUG][com.disl.boilerplate.config.LoggingAspect][SpringApplicationShutdownHook][68]Exit: com.disl.boilerplate.services.PrivilegeService.findByPrivilegeName() with result = com.disl.boilerplate.entities.Privilege@318e4946
+[2023-02-23 13:40:32,077][DEBUG][com.disl.boilerplate.config.LoggingAspect][SpringApplicationShutdownHook][59]Enter: com.disl.boilerplate.services.PrivilegeService.findByPrivilegeName() with argument[s] = [USER_UPDATE_FROM_ADMIN]
+[2023-02-23 13:40:32,078][DEBUG][com.disl.boilerplate.config.LoggingAspect][SpringApplicationShutdownHook][68]Exit: com.disl.boilerplate.services.PrivilegeService.findByPrivilegeName() with result = com.disl.boilerplate.entities.Privilege@77b69b5
+[2023-02-23 13:40:32,078][DEBUG][com.disl.boilerplate.config.LoggingAspect][SpringApplicationShutdownHook][59]Enter: com.disl.boilerplate.services.PrivilegeService.findByPrivilegeName() with argument[s] = [SUPER ADMIN]
+[2023-02-23 13:40:32,079][DEBUG][com.disl.boilerplate.config.LoggingAspect][SpringApplicationShutdownHook][68]Exit: com.disl.boilerplate.services.PrivilegeService.findByPrivilegeName() with result = null
+[2023-02-23 13:40:32,079][DEBUG][com.disl.boilerplate.config.LoggingAspect][SpringApplicationShutdownHook][59]Enter: com.disl.boilerplate.services.RoleService.findRoleByName() with argument[s] = [SUPER ADMIN]
+[2023-02-23 13:40:32,082][DEBUG][com.disl.boilerplate.config.LoggingAspect][SpringApplicationShutdownHook][68]Exit: com.disl.boilerplate.services.RoleService.findRoleByName() with result = com.disl.boilerplate.entities.Role@41bdd8b2
+[2023-02-23 13:40:32,083][DEBUG][com.disl.boilerplate.config.LoggingAspect][SpringApplicationShutdownHook][59]Enter: com.disl.boilerplate.services.RoleService.saveRole() with argument[s] = [com.disl.boilerplate.entities.Role@41bdd8b2]
+[2023-02-23 13:40:32,087][DEBUG][com.disl.boilerplate.config.LoggingAspect][SpringApplicationShutdownHook][68]Exit: com.disl.boilerplate.services.RoleService.saveRole() with result = com.disl.boilerplate.entities.Role@4362dc59
+[2023-02-23 13:40:32,087][DEBUG][com.disl.boilerplate.config.LoggingAspect][SpringApplicationShutdownHook][59]Enter: com.disl.boilerplate.services.UserService.findByEmail() with argument[s] = [super_admin@disl.com]
+[2023-02-23 13:40:32,091][DEBUG][com.disl.boilerplate.config.LoggingAspect][SpringApplicationShutdownHook][68]Exit: com.disl.boilerplate.services.UserService.findByEmail() with result = com.disl.boilerplate.entities.User@481c61b5
+[2023-02-23 13:40:32,110][INFO ][org.springframework.orm.jpa.AbstractEntityManagerFactoryBean][SpringApplicationShutdownHook][650]Closing JPA EntityManagerFactory for persistence unit 'default'
+[2023-02-23 13:40:32,112][INFO ][com.zaxxer.hikari.HikariDataSource][SpringApplicationShutdownHook][350]HikariPool-1 - Shutdown initiated...
+[2023-02-23 13:40:32,114][INFO ][com.zaxxer.hikari.HikariDataSource][SpringApplicationShutdownHook][352]HikariPool-1 - Shutdown completed.
+[2023-02-23 13:41:00,191][INFO ][org.springframework.boot.StartupInfoLogger][restartedMain][51]Starting BoilerplateApplication using Java 17.0.2 with PID 8249 (/Users/zakaria/Documents/Development/Backend/SpringBoot-Boilerplate/target/classes started by zakaria in /Users/zakaria/Documents/Development/Backend/SpringBoot-Boilerplate)
+[2023-02-23 13:41:00,193][DEBUG][org.springframework.boot.StartupInfoLogger][restartedMain][52]Running with Spring Boot v3.0.2, Spring v6.0.4
+[2023-02-23 13:41:00,193][INFO ][org.springframework.boot.SpringApplication][restartedMain][636]The following 1 profile is active: "development"
+[2023-02-23 13:41:00,219][INFO ][org.springframework.boot.logging.DeferredLog][restartedMain][250]Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+[2023-02-23 13:41:00,219][INFO ][org.springframework.boot.logging.DeferredLog][restartedMain][250]For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+[2023-02-23 13:41:00,707][INFO ][org.springframework.data.repository.config.RepositoryConfigurationDelegate][restartedMain][138]Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+[2023-02-23 13:41:00,750][INFO ][org.springframework.data.repository.config.RepositoryConfigurationDelegate][restartedMain][208]Finished Spring Data repository scanning in 39 ms. Found 4 JPA repository interfaces.
+[2023-02-23 13:41:00,996][INFO ][org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker][restartedMain][409]Bean 'customGlobalMethodSecurityConfig' of type [com.disl.boilerplate.security.CustomGlobalMethodSecurityConfig$$SpringCGLIB$$0] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+[2023-02-23 13:41:01,017][INFO ][org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker][restartedMain][409]Bean 'createExpressionHandler' of type [org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+[2023-02-23 13:41:01,197][INFO ][org.springframework.boot.web.embedded.tomcat.TomcatWebServer][restartedMain][108]Tomcat initialized with port(s): 8081 (http)
+[2023-02-23 13:41:01,202][INFO ][org.apache.juli.logging.DirectJDKLog][restartedMain][173]Initializing ProtocolHandler ["http-nio-8081"]
+[2023-02-23 13:41:01,203][INFO ][org.apache.juli.logging.DirectJDKLog][restartedMain][173]Starting service [Tomcat]
+[2023-02-23 13:41:01,203][INFO ][org.apache.juli.logging.DirectJDKLog][restartedMain][173]Starting Servlet engine: [Apache Tomcat/10.1.5]
+[2023-02-23 13:41:01,238][INFO ][org.apache.juli.logging.DirectJDKLog][restartedMain][173]Initializing Spring embedded WebApplicationContext
+[2023-02-23 13:41:01,239][INFO ][org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext][restartedMain][291]Root WebApplicationContext: initialization completed in 1019 ms
+[2023-02-23 13:41:01,469][INFO ][com.zaxxer.hikari.HikariDataSource][restartedMain][110]HikariPool-1 - Starting...
+[2023-02-23 13:41:01,512][INFO ][com.zaxxer.hikari.pool.HikariPool][restartedMain][565]HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@d28c0f7
+[2023-02-23 13:41:01,513][INFO ][com.zaxxer.hikari.HikariDataSource][restartedMain][123]HikariPool-1 - Start completed.
+[2023-02-23 13:41:01,528][INFO ][org.hibernate.engine.jdbc.dialect.internal.DialectFactoryImpl][restartedMain][66]HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+[2023-02-23 13:41:02,018][INFO ][org.springframework.orm.jpa.AbstractEntityManagerFactoryBean][restartedMain][437]Initialized JPA EntityManagerFactory for persistence unit 'default'
+[2023-02-23 13:41:02,253][DEBUG][org.springframework.web.filter.GenericFilterBean][restartedMain][240]Filter 'jwtAuthenticationFilter' configured for use
+[2023-02-23 13:41:02,254][DEBUG][org.springframework.web.filter.GenericFilterBean][restartedMain][240]Filter 'resourceUrlEncodingFilter' configured for use
+[2023-02-23 13:41:02,682][TRACE][org.springframework.web.servlet.handler.AbstractHandlerMethodMapping][restartedMain][291]
+	c.d.b.c.EntryController:
+	{GET [/api/me]}: getUserInfo()
+	{POST [/api/signup]}: createUser(SignUpRequest)
+	{POST [/api/admin-user-create]}: createAdminUser(AdminCreationRequest)
+	{POST [/api/changepassword]}: changePassword(ChangePasswordRequest)
+	{POST [/api/signin]}: authenticateUser(SignInRequest)
+	{PUT [/api/user/update-banned-status]}: updateBannedStatusManually(UpdateBannedStatusRequest)
+	{PUT [/api/user/update-verify-status]}: updateVerifyStatusManually(UpdateVerifyStatusRequest)
+	{GET [/api/user/all]}: getAllPaginatedUsers(int,int,String,AscOrDescType,Map)
+	{GET [/api/user/id/{userId}]}: findUserById(long)
+	{PUT [/api/update-user-from-admin]}: updateUserInfo(UpdateUserFromAdmin)
+	{PUT [/api/user/info/update]}: updateUserInfo(UpdateUserInfoRequest)
+	{POST [/api/forgetpassword]}: requestForgetPassword(InitialForgetPasswordRequest)
+	{POST [/api/refreshtoken]}: refreshtoken(RefreshTokenRequest)
+	{GET [/api/oauth2/login]}: socialLogin(SocialAuthType,String)
+[2023-02-23 13:41:02,684][TRACE][org.springframework.web.servlet.handler.AbstractHandlerMethodMapping][restartedMain][291]
+	c.d.b.c.LogfileController:
+	{GET [/api/log-file/logfiles]}: getLog(int,int,String)
+	{GET [/api/log-file/download]}: downloadFile(String)
+	{DELETE [/api/log-file/delete]}: deleteFile(String,long)
+[2023-02-23 13:41:02,685][TRACE][org.springframework.web.servlet.handler.AbstractHandlerMethodMapping][restartedMain][291]
+	c.d.b.c.PrivilegeController:
+	{GET [/api/privilege]}: getAllPrivileges()
+[2023-02-23 13:41:02,686][TRACE][org.springframework.web.servlet.handler.AbstractHandlerMethodMapping][restartedMain][291]
+	c.d.b.c.RoleController:
+	{POST [/api/role/create]}: createRole(RoleCreateRequest)
+	{DELETE [/api/role/{roleId}]}: deleteRole(long)
+	{PUT [/api/role/update]}: updateRole(RoleUpdateRequest)
+	{GET [/api/role/users]}: getUserRoles(String)
+	{GET [/api/role/types]}: getRoleTypes()
+	{GET [/api/role/all]}: getPaginatedRoles(int,int,String,AscOrDescType,Map)
+	{GET [/api/role/total]}: getTotalRoles(String)
+	{GET [/api/role/{id}]}: getRoleById(long)
+[2023-02-23 13:41:02,687][TRACE][org.springframework.web.servlet.handler.AbstractHandlerMethodMapping][restartedMain][291]
+	c.d.b.c.t.ForgetPasswordController:
+	{GET [/resetpassword], produces [text/html]}: resetPasswordHTML(Model,String)
+	{POST [/pass-reset], produces [text/html]}: resetPass(ForgetPassRequest,BindingResult,Model)
+[2023-02-23 13:41:02,688][TRACE][org.springframework.web.servlet.handler.AbstractHandlerMethodMapping][restartedMain][291]
+	o.s.b.a.w.s.e.BasicErrorController:
+	{ [/error]}: error(HttpServletRequest)
+	{ [/error], produces [text/html]}: errorHtml(HttpServletRequest,HttpServletResponse)
+[2023-02-23 13:41:02,694][TRACE][org.springframework.web.servlet.handler.AbstractHandlerMethodMapping][restartedMain][291]
+	o.s.w.a.OpenApiWebMvcResource:
+	{GET [/v3/api-docs], produces [application/json]}: openapiJson(HttpServletRequest,String,Locale)
+	{GET [/v3/api-docs.yaml], produces [application/vnd.oai.openapi]}: openapiYaml(HttpServletRequest,String,Locale)
+[2023-02-23 13:41:02,695][TRACE][org.springframework.web.servlet.handler.AbstractHandlerMethodMapping][restartedMain][291]
+	o.s.w.u.SwaggerWelcomeWebMvc:
+	{GET [/swagger-ui.html]}: redirectToUi(HttpServletRequest)
+[2023-02-23 13:41:02,696][TRACE][org.springframework.web.servlet.handler.AbstractHandlerMethodMapping][restartedMain][291]
+	o.s.w.u.SwaggerConfigResource:
+	{GET [/v3/api-docs/swagger-config], produces [application/json]}: openapiJson(HttpServletRequest)
+[2023-02-23 13:41:02,697][DEBUG][org.springframework.web.servlet.handler.AbstractHandlerMethodMapping][restartedMain][366]34 mappings in 'requestMappingHandlerMapping'
+[2023-02-23 13:41:02,712][DEBUG][org.springframework.web.servlet.handler.AbstractDetectingUrlHandlerMapping][restartedMain][89]Detected 0 mappings in 'beanNameHandlerMapping'
+[2023-02-23 13:41:02,732][TRACE][org.springframework.web.servlet.function.support.RouterFunctionMapping][restartedMain][175]0 RouterFunction(s) in 'routerFunctionMapping'
+[2023-02-23 13:41:02,737][DEBUG][org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguration$WebMvcAutoConfigurationAdapter][restartedMain][323]Default resource handling disabled
+[2023-02-23 13:41:02,875][TRACE][org.springframework.web.servlet.handler.AbstractUrlHandlerMapping][restartedMain][452]Mapped [/swagger-ui*/*swagger-initializer.js] onto ResourceHttpRequestHandler [classpath [META-INF/resources/webjars/]]
+[2023-02-23 13:41:02,875][TRACE][org.springframework.web.servlet.handler.AbstractUrlHandlerMapping][restartedMain][452]Mapped [/swagger-ui*/**] onto ResourceHttpRequestHandler [classpath [META-INF/resources/webjars/]]
+[2023-02-23 13:41:02,875][DEBUG][org.springframework.web.servlet.handler.SimpleUrlHandlerMapping][restartedMain][187]Patterns [/swagger-ui*/*swagger-initializer.js, /swagger-ui*/**] in 'resourceHandlerMapping'
+[2023-02-23 13:41:02,939][INFO ][org.springframework.security.web.access.channel.ChannelProcessingFilter][restartedMain][106]Validated configuration attributes
+[2023-02-23 13:41:02,943][INFO ][org.springframework.security.web.DefaultSecurityFilterChain][restartedMain][54]Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@46711a7d, org.springframework.security.web.access.channel.ChannelProcessingFilter@11fa8894, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@f74d732, org.springframework.security.web.context.SecurityContextHolderFilter@6a6416ad, org.springframework.security.web.header.HeaderWriterFilter@64ccf95b, org.springframework.security.web.authentication.logout.LogoutFilter@6dd09a96, com.disl.boilerplate.security.JwtAuthenticationFilter$$SpringCGLIB$$0@6e73a99f, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@6f49a5a8, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@e616e38, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@5eaa7e69, org.springframework.security.web.session.SessionManagementFilter@3737d2f5, org.springframework.security.web.access.ExceptionTranslationFilter@22776c6e, org.springframework.security.web.access.intercept.AuthorizationFilter@6661d078]
+[2023-02-23 13:41:03,015][DEBUG][org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter][restartedMain][614]ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+[2023-02-23 13:41:03,041][DEBUG][org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver][restartedMain][292]ControllerAdvice beans: 4 @ExceptionHandler, 1 ResponseBodyAdvice
+[2023-02-23 13:41:03,240][INFO ][org.springframework.boot.devtools.autoconfigure.OptionalLiveReloadServer][restartedMain][59]LiveReload server is running on port 35729
+[2023-02-23 13:41:03,255][INFO ][org.apache.juli.logging.DirectJDKLog][restartedMain][173]Starting ProtocolHandler ["http-nio-8081"]
+[2023-02-23 13:41:03,267][INFO ][org.springframework.boot.web.embedded.tomcat.TomcatWebServer][restartedMain][220]Tomcat started on port(s): 8081 (http) with context path ''
+[2023-02-23 13:41:03,276][INFO ][com.disl.boilerplate.config.InitialDataLoader][restartedMain][44]Logfile path
+
+
+
+ => logging.file.path_IS_UNDEFINED
+[2023-02-23 13:41:03,278][DEBUG][com.disl.boilerplate.config.LoggingAspect][restartedMain][59]Enter: com.disl.boilerplate.services.PrivilegeService.findByPrivilegeName() with argument[s] = [ROLE_CREATE]
+[2023-02-23 13:41:03,338][DEBUG][com.disl.boilerplate.config.LoggingAspect][restartedMain][68]Exit: com.disl.boilerplate.services.PrivilegeService.findByPrivilegeName() with result = com.disl.boilerplate.entities.Privilege@7f8eda38
+[2023-02-23 13:41:03,338][DEBUG][com.disl.boilerplate.config.LoggingAspect][restartedMain][59]Enter: com.disl.boilerplate.services.PrivilegeService.findByPrivilegeName() with argument[s] = [ROLE_UPDATE]
+[2023-02-23 13:41:03,340][DEBUG][com.disl.boilerplate.config.LoggingAspect][restartedMain][68]Exit: com.disl.boilerplate.services.PrivilegeService.findByPrivilegeName() with result = com.disl.boilerplate.entities.Privilege@4e277c93
+[2023-02-23 13:41:03,340][DEBUG][com.disl.boilerplate.config.LoggingAspect][restartedMain][59]Enter: com.disl.boilerplate.services.PrivilegeService.findByPrivilegeName() with argument[s] = [ROLE_DELETE]
+[2023-02-23 13:41:03,341][DEBUG][com.disl.boilerplate.config.LoggingAspect][restartedMain][68]Exit: com.disl.boilerplate.services.PrivilegeService.findByPrivilegeName() with result = com.disl.boilerplate.entities.Privilege@75ac4d81
+[2023-02-23 13:41:03,341][DEBUG][com.disl.boilerplate.config.LoggingAspect][restartedMain][59]Enter: com.disl.boilerplate.services.PrivilegeService.findByPrivilegeName() with argument[s] = [USER_DELETE]
+[2023-02-23 13:41:03,342][DEBUG][com.disl.boilerplate.config.LoggingAspect][restartedMain][68]Exit: com.disl.boilerplate.services.PrivilegeService.findByPrivilegeName() with result = com.disl.boilerplate.entities.Privilege@16a2f1cb
+[2023-02-23 13:41:03,343][DEBUG][com.disl.boilerplate.config.LoggingAspect][restartedMain][59]Enter: com.disl.boilerplate.services.PrivilegeService.findByPrivilegeName() with argument[s] = [USER_CREATE]
+[2023-02-23 13:41:03,344][DEBUG][com.disl.boilerplate.config.LoggingAspect][restartedMain][68]Exit: com.disl.boilerplate.services.PrivilegeService.findByPrivilegeName() with result = com.disl.boilerplate.entities.Privilege@76679f6
+[2023-02-23 13:41:03,344][DEBUG][com.disl.boilerplate.config.LoggingAspect][restartedMain][59]Enter: com.disl.boilerplate.services.PrivilegeService.findByPrivilegeName() with argument[s] = [USER_UPDATE]
+[2023-02-23 13:41:03,346][DEBUG][com.disl.boilerplate.config.LoggingAspect][restartedMain][68]Exit: com.disl.boilerplate.services.PrivilegeService.findByPrivilegeName() with result = com.disl.boilerplate.entities.Privilege@72bef853
+[2023-02-23 13:41:03,346][DEBUG][com.disl.boilerplate.config.LoggingAspect][restartedMain][59]Enter: com.disl.boilerplate.services.PrivilegeService.findByPrivilegeName() with argument[s] = [GENERAL]
+[2023-02-23 13:41:03,347][DEBUG][com.disl.boilerplate.config.LoggingAspect][restartedMain][68]Exit: com.disl.boilerplate.services.PrivilegeService.findByPrivilegeName() with result = com.disl.boilerplate.entities.Privilege@4009f988
+[2023-02-23 13:41:03,347][DEBUG][com.disl.boilerplate.config.LoggingAspect][restartedMain][59]Enter: com.disl.boilerplate.services.PrivilegeService.findByPrivilegeName() with argument[s] = [USER_READ]
+[2023-02-23 13:41:03,349][DEBUG][com.disl.boilerplate.config.LoggingAspect][restartedMain][68]Exit: com.disl.boilerplate.services.PrivilegeService.findByPrivilegeName() with result = com.disl.boilerplate.entities.Privilege@5f7d2b7c
+[2023-02-23 13:41:03,349][DEBUG][com.disl.boilerplate.config.LoggingAspect][restartedMain][59]Enter: com.disl.boilerplate.services.PrivilegeService.findByPrivilegeName() with argument[s] = [ROLE_READ]
+[2023-02-23 13:41:03,350][DEBUG][com.disl.boilerplate.config.LoggingAspect][restartedMain][68]Exit: com.disl.boilerplate.services.PrivilegeService.findByPrivilegeName() with result = com.disl.boilerplate.entities.Privilege@56c677e1
+[2023-02-23 13:41:03,350][DEBUG][com.disl.boilerplate.config.LoggingAspect][restartedMain][59]Enter: com.disl.boilerplate.services.PrivilegeService.findByPrivilegeName() with argument[s] = [USER_UPDATE_FROM_ADMIN]
+[2023-02-23 13:41:03,351][DEBUG][com.disl.boilerplate.config.LoggingAspect][restartedMain][68]Exit: com.disl.boilerplate.services.PrivilegeService.findByPrivilegeName() with result = com.disl.boilerplate.entities.Privilege@45b5ba7a
+[2023-02-23 13:41:03,352][DEBUG][com.disl.boilerplate.config.LoggingAspect][restartedMain][59]Enter: com.disl.boilerplate.services.PrivilegeService.findByPrivilegeName() with argument[s] = [SUPER ADMIN]
+[2023-02-23 13:41:03,353][DEBUG][com.disl.boilerplate.config.LoggingAspect][restartedMain][68]Exit: com.disl.boilerplate.services.PrivilegeService.findByPrivilegeName() with result = null
+[2023-02-23 13:41:03,353][DEBUG][com.disl.boilerplate.config.LoggingAspect][restartedMain][59]Enter: com.disl.boilerplate.services.RoleService.findRoleByName() with argument[s] = [SUPER ADMIN]
+[2023-02-23 13:41:03,365][DEBUG][com.disl.boilerplate.config.LoggingAspect][restartedMain][68]Exit: com.disl.boilerplate.services.RoleService.findRoleByName() with result = com.disl.boilerplate.entities.Role@62c53d8e
+[2023-02-23 13:41:03,365][DEBUG][com.disl.boilerplate.config.LoggingAspect][restartedMain][59]Enter: com.disl.boilerplate.services.RoleService.saveRole() with argument[s] = [com.disl.boilerplate.entities.Role@62c53d8e]
+[2023-02-23 13:41:03,386][DEBUG][com.disl.boilerplate.config.LoggingAspect][restartedMain][68]Exit: com.disl.boilerplate.services.RoleService.saveRole() with result = com.disl.boilerplate.entities.Role@6fdab66c
+[2023-02-23 13:41:03,387][DEBUG][com.disl.boilerplate.config.LoggingAspect][restartedMain][59]Enter: com.disl.boilerplate.services.UserService.findByEmail() with argument[s] = [super_admin@disl.com]
+[2023-02-23 13:41:03,394][DEBUG][com.disl.boilerplate.config.LoggingAspect][restartedMain][68]Exit: com.disl.boilerplate.services.UserService.findByEmail() with result = com.disl.boilerplate.entities.User@33009bf
+[2023-02-23 13:41:03,396][INFO ][org.springframework.boot.StartupInfoLogger][restartedMain][57]Started BoilerplateApplication in 3.447 seconds (process running for 8.863)
+[2023-02-23 13:43:42,698][INFO ][com.disl.boilerplate.config.InitialDataLoader][SpringApplicationShutdownHook][44]Logfile path
+
+
+
+ => logging.file.path_IS_UNDEFINED
+[2023-02-23 13:43:42,699][DEBUG][com.disl.boilerplate.config.LoggingAspect][SpringApplicationShutdownHook][59]Enter: com.disl.boilerplate.services.PrivilegeService.findByPrivilegeName() with argument[s] = [ROLE_CREATE]
+[2023-02-23 13:43:42,701][DEBUG][com.disl.boilerplate.config.LoggingAspect][SpringApplicationShutdownHook][68]Exit: com.disl.boilerplate.services.PrivilegeService.findByPrivilegeName() with result = com.disl.boilerplate.entities.Privilege@7754ed94
+[2023-02-23 13:43:42,701][DEBUG][com.disl.boilerplate.config.LoggingAspect][SpringApplicationShutdownHook][59]Enter: com.disl.boilerplate.services.PrivilegeService.findByPrivilegeName() with argument[s] = [ROLE_UPDATE]
+[2023-02-23 13:43:42,703][DEBUG][com.disl.boilerplate.config.LoggingAspect][SpringApplicationShutdownHook][68]Exit: com.disl.boilerplate.services.PrivilegeService.findByPrivilegeName() with result = com.disl.boilerplate.entities.Privilege@14ec18d1
+[2023-02-23 13:43:42,703][DEBUG][com.disl.boilerplate.config.LoggingAspect][SpringApplicationShutdownHook][59]Enter: com.disl.boilerplate.services.PrivilegeService.findByPrivilegeName() with argument[s] = [ROLE_DELETE]
+[2023-02-23 13:43:42,705][DEBUG][com.disl.boilerplate.config.LoggingAspect][SpringApplicationShutdownHook][68]Exit: com.disl.boilerplate.services.PrivilegeService.findByPrivilegeName() with result = com.disl.boilerplate.entities.Privilege@3b2b36d8
+[2023-02-23 13:43:42,705][DEBUG][com.disl.boilerplate.config.LoggingAspect][SpringApplicationShutdownHook][59]Enter: com.disl.boilerplate.services.PrivilegeService.findByPrivilegeName() with argument[s] = [USER_DELETE]
+[2023-02-23 13:43:42,707][DEBUG][com.disl.boilerplate.config.LoggingAspect][SpringApplicationShutdownHook][68]Exit: com.disl.boilerplate.services.PrivilegeService.findByPrivilegeName() with result = com.disl.boilerplate.entities.Privilege@193a18d3
+[2023-02-23 13:43:42,707][DEBUG][com.disl.boilerplate.config.LoggingAspect][SpringApplicationShutdownHook][59]Enter: com.disl.boilerplate.services.PrivilegeService.findByPrivilegeName() with argument[s] = [USER_CREATE]
+[2023-02-23 13:43:42,709][DEBUG][com.disl.boilerplate.config.LoggingAspect][SpringApplicationShutdownHook][68]Exit: com.disl.boilerplate.services.PrivilegeService.findByPrivilegeName() with result = com.disl.boilerplate.entities.Privilege@12f5a519
+[2023-02-23 13:43:42,709][DEBUG][com.disl.boilerplate.config.LoggingAspect][SpringApplicationShutdownHook][59]Enter: com.disl.boilerplate.services.PrivilegeService.findByPrivilegeName() with argument[s] = [USER_UPDATE]
+[2023-02-23 13:43:42,710][DEBUG][com.disl.boilerplate.config.LoggingAspect][SpringApplicationShutdownHook][68]Exit: com.disl.boilerplate.services.PrivilegeService.findByPrivilegeName() with result = com.disl.boilerplate.entities.Privilege@4e892d19
+[2023-02-23 13:43:42,710][DEBUG][com.disl.boilerplate.config.LoggingAspect][SpringApplicationShutdownHook][59]Enter: com.disl.boilerplate.services.PrivilegeService.findByPrivilegeName() with argument[s] = [GENERAL]
+[2023-02-23 13:43:42,712][DEBUG][com.disl.boilerplate.config.LoggingAspect][SpringApplicationShutdownHook][68]Exit: com.disl.boilerplate.services.PrivilegeService.findByPrivilegeName() with result = com.disl.boilerplate.entities.Privilege@6e63b2ad
+[2023-02-23 13:43:42,712][DEBUG][com.disl.boilerplate.config.LoggingAspect][SpringApplicationShutdownHook][59]Enter: com.disl.boilerplate.services.PrivilegeService.findByPrivilegeName() with argument[s] = [USER_READ]
+[2023-02-23 13:43:42,713][DEBUG][com.disl.boilerplate.config.LoggingAspect][SpringApplicationShutdownHook][68]Exit: com.disl.boilerplate.services.PrivilegeService.findByPrivilegeName() with result = com.disl.boilerplate.entities.Privilege@35636460
+[2023-02-23 13:43:42,713][DEBUG][com.disl.boilerplate.config.LoggingAspect][SpringApplicationShutdownHook][59]Enter: com.disl.boilerplate.services.PrivilegeService.findByPrivilegeName() with argument[s] = [ROLE_READ]
+[2023-02-23 13:43:42,714][DEBUG][com.disl.boilerplate.config.LoggingAspect][SpringApplicationShutdownHook][68]Exit: com.disl.boilerplate.services.PrivilegeService.findByPrivilegeName() with result = com.disl.boilerplate.entities.Privilege@745e4d4c
+[2023-02-23 13:43:42,714][DEBUG][com.disl.boilerplate.config.LoggingAspect][SpringApplicationShutdownHook][59]Enter: com.disl.boilerplate.services.PrivilegeService.findByPrivilegeName() with argument[s] = [USER_UPDATE_FROM_ADMIN]
+[2023-02-23 13:43:42,715][DEBUG][com.disl.boilerplate.config.LoggingAspect][SpringApplicationShutdownHook][68]Exit: com.disl.boilerplate.services.PrivilegeService.findByPrivilegeName() with result = com.disl.boilerplate.entities.Privilege@36c13dde
+[2023-02-23 13:43:42,716][DEBUG][com.disl.boilerplate.config.LoggingAspect][SpringApplicationShutdownHook][59]Enter: com.disl.boilerplate.services.PrivilegeService.findByPrivilegeName() with argument[s] = [SUPER ADMIN]
+[2023-02-23 13:43:42,716][DEBUG][com.disl.boilerplate.config.LoggingAspect][SpringApplicationShutdownHook][68]Exit: com.disl.boilerplate.services.PrivilegeService.findByPrivilegeName() with result = null
+[2023-02-23 13:43:42,717][DEBUG][com.disl.boilerplate.config.LoggingAspect][SpringApplicationShutdownHook][59]Enter: com.disl.boilerplate.services.RoleService.findRoleByName() with argument[s] = [SUPER ADMIN]
+[2023-02-23 13:43:42,720][DEBUG][com.disl.boilerplate.config.LoggingAspect][SpringApplicationShutdownHook][68]Exit: com.disl.boilerplate.services.RoleService.findRoleByName() with result = com.disl.boilerplate.entities.Role@30ee1858
+[2023-02-23 13:43:42,720][DEBUG][com.disl.boilerplate.config.LoggingAspect][SpringApplicationShutdownHook][59]Enter: com.disl.boilerplate.services.RoleService.saveRole() with argument[s] = [com.disl.boilerplate.entities.Role@30ee1858]
+[2023-02-23 13:43:42,724][DEBUG][com.disl.boilerplate.config.LoggingAspect][SpringApplicationShutdownHook][68]Exit: com.disl.boilerplate.services.RoleService.saveRole() with result = com.disl.boilerplate.entities.Role@3889e8d
+[2023-02-23 13:43:42,724][DEBUG][com.disl.boilerplate.config.LoggingAspect][SpringApplicationShutdownHook][59]Enter: com.disl.boilerplate.services.UserService.findByEmail() with argument[s] = [super_admin@disl.com]
+[2023-02-23 13:43:42,729][DEBUG][com.disl.boilerplate.config.LoggingAspect][SpringApplicationShutdownHook][68]Exit: com.disl.boilerplate.services.UserService.findByEmail() with result = com.disl.boilerplate.entities.User@4b8359be
+[2023-02-23 13:43:42,751][INFO ][org.springframework.orm.jpa.AbstractEntityManagerFactoryBean][SpringApplicationShutdownHook][650]Closing JPA EntityManagerFactory for persistence unit 'default'
+[2023-02-23 13:43:42,753][INFO ][com.zaxxer.hikari.HikariDataSource][SpringApplicationShutdownHook][350]HikariPool-1 - Shutdown initiated...
+[2023-02-23 13:43:42,754][INFO ][com.zaxxer.hikari.HikariDataSource][SpringApplicationShutdownHook][352]HikariPool-1 - Shutdown completed.
