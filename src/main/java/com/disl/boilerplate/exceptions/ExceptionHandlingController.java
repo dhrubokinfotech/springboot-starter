@@ -1,6 +1,7 @@
 package com.disl.boilerplate.exceptions;
 
 import com.disl.boilerplate.models.Response;
+import io.swagger.v3.oas.annotations.Hidden;
 import org.springframework.beans.ConversionNotSupportedException;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
@@ -22,23 +23,20 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
-import springfox.documentation.annotations.ApiIgnore;
 
 import java.sql.SQLException;
 import java.util.Optional;
 
+@Hidden
 @Order(Ordered.HIGHEST_PRECEDENCE)
 @ControllerAdvice
-@ApiIgnore
 public class ExceptionHandlingController extends ResponseEntityExceptionHandler {
 
 	@ResponseBody
 	@ExceptionHandler(NotFoundException.class)
 	public ResponseEntity<Object> handleNotFoundException(NotFoundException e) {
 		String className = e.getClassName().getSimpleName();
-
-		Response errorResponse = new Response(HttpStatus.BAD_REQUEST, false,  "No " + className.toLowerCase() + " found with this id", null);
-		return buildResponseEntity(errorResponse);
+		return buildResponseEntity(HttpStatus.BAD_REQUEST, false, "No " + className.toLowerCase() + " found with this id", null);
 	}
 
 	@ResponseBody
@@ -46,23 +44,19 @@ public class ExceptionHandlingController extends ResponseEntityExceptionHandler 
 	public ResponseEntity<Object> handleResponseException(ResponseException e) {
 		Object payload = e.getPayload();
 		HttpStatus httpStatus = e.getHttpStatus();
-
-		Response errorResponse = new Response(httpStatus != null ? httpStatus :  HttpStatus.BAD_REQUEST, false, e.getMessage(), payload);
-		return buildResponseEntity(errorResponse);
+		return buildResponseEntity(httpStatus != null ? httpStatus :  HttpStatus.BAD_REQUEST, false, e.getMessage(), payload);
 	}
 
 	@Override
 	protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException e, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
-		Response errorResponse = new Response(status, false, "Invalid request body.", null);
 		Optional<ObjectError> objectError = e.getBindingResult().getAllErrors().stream().findFirst();
 
 		if(objectError.isPresent()) {
 			ObjectError error = objectError.get();
-			errorResponse.setMessage(((FieldError) error).getField() + " field " + error.getDefaultMessage());
-			return buildResponseEntity(errorResponse);
+			return buildResponseEntity(status, false, ((FieldError) error).getField() + " field " + error.getDefaultMessage(), null);
 		}
 
-		return buildResponseEntity(errorResponse);
+		return buildResponseEntity(status, false, "Invalid request body.", null);
 	}
 
 	@Override
@@ -70,11 +64,7 @@ public class ExceptionHandlingController extends ResponseEntityExceptionHandler 
 			HttpMessageNotReadableException ex, HttpHeaders headers,
 			HttpStatusCode status, WebRequest request
 	) {
-		return buildResponseEntity((new Response(status, false, "Invalid input.", ex.getLocalizedMessage())));
-	}
-
-	private ResponseEntity<Object> buildResponseEntity(Response apiError) {
-		return new ResponseEntity<>(apiError, apiError.getStatus());
+		return buildResponseEntity(status, false, "Invalid input.", ex.getLocalizedMessage());
 	}
 
 	@Override
@@ -82,7 +72,7 @@ public class ExceptionHandlingController extends ResponseEntityExceptionHandler 
 			ConversionNotSupportedException ex, HttpHeaders headers,
 			HttpStatusCode status, WebRequest request
 	) {
-		return buildResponseEntity((new Response(status, false, "Invalid Input", ex.getLocalizedMessage())));
+		return buildResponseEntity(status, false, "Invalid Input", ex.getLocalizedMessage());
 	}
 
 	@Override
@@ -90,7 +80,7 @@ public class ExceptionHandlingController extends ResponseEntityExceptionHandler 
 			HttpMediaTypeNotAcceptableException ex, HttpHeaders headers,
 			HttpStatusCode status, WebRequest request
 	) {
-		return buildResponseEntity((new Response(status, false, "Invalid File Type provided.", ex.getLocalizedMessage())));
+		return buildResponseEntity(status, false, "Invalid File Type provided.", ex.getLocalizedMessage());
 	}
 
 	@Override
@@ -98,7 +88,7 @@ public class ExceptionHandlingController extends ResponseEntityExceptionHandler 
 			HttpMessageNotWritableException ex, HttpHeaders headers,
 			HttpStatusCode status, WebRequest request
 	) {
-		return buildResponseEntity((new Response(status, false, "Server Error. Write Failed", ex.getLocalizedMessage())));
+		return buildResponseEntity(status, false, "Server Error. Write Failed", ex.getLocalizedMessage());
 	}
 
 	@Override
@@ -106,7 +96,7 @@ public class ExceptionHandlingController extends ResponseEntityExceptionHandler 
 			HttpRequestMethodNotSupportedException ex, HttpHeaders headers,
 			HttpStatusCode status, WebRequest request
 	) {
-		return buildResponseEntity((new Response(status, false, "Invalid type of request.", ex.getLocalizedMessage())));
+		return buildResponseEntity(status, false, "Invalid type of request.", ex.getLocalizedMessage());
 	}
 
 	@Override
@@ -114,7 +104,7 @@ public class ExceptionHandlingController extends ResponseEntityExceptionHandler 
 			Exception ex, Object body, HttpHeaders headers,
 			HttpStatusCode status, WebRequest request
 	) {
-		return buildResponseEntity((new Response(status, false, "Server Error Occurred.", ex.getLocalizedMessage())));
+		return buildResponseEntity(status, false, "Server Error Occurred.", ex.getLocalizedMessage());
 	}
 
 	@Override
@@ -122,8 +112,7 @@ public class ExceptionHandlingController extends ResponseEntityExceptionHandler 
 			MissingPathVariableException ex, HttpHeaders headers,
 			HttpStatusCode status, WebRequest request
 	) {
-		return buildResponseEntity((new Response(status, false, "Request Failed. Invalid Request. Please Try Again.",
-				ex.getLocalizedMessage())));
+		return buildResponseEntity(status, false, "Request Failed. Invalid Request. Please Try Again.", ex.getLocalizedMessage());
 	}
 
 	@Override
@@ -131,14 +120,25 @@ public class ExceptionHandlingController extends ResponseEntityExceptionHandler 
 			HttpMediaTypeNotSupportedException ex, HttpHeaders headers,
 			HttpStatusCode status, WebRequest request
 	) {
-		return buildResponseEntity((new Response(status, false, "Request Failed. Invalid Request. Please Try Again.",
-				ex.getLocalizedMessage())));
+		return buildResponseEntity(status, false, "Request Failed. Invalid Request. Please Try Again.", ex.getLocalizedMessage());
 	}
 
 	@ResponseBody
     @ExceptionHandler(SQLException.class)
     public ResponseEntity<Object> handleSQLException(SQLException ex) {
-		return buildResponseEntity((new Response(HttpStatus.BAD_REQUEST, false, "Request Failed. Invalid Request. Please Try Again.",
-				ex.getLocalizedMessage())));
+		return buildResponseEntity(HttpStatus.BAD_REQUEST, false, "Request Failed. Invalid Request. Please Try Again.", ex.getLocalizedMessage());
     }
+
+	private ResponseEntity<Object> buildResponseEntity(HttpStatusCode status, boolean success, String message, Object payload) {
+		HttpStatus httpStatus;
+
+		try {
+			httpStatus = HttpStatus.valueOf(status.value());
+		} catch (Exception e) {
+			httpStatus = HttpStatus.BAD_REQUEST;
+		}
+
+		Response errorResponse = new Response(httpStatus, success, message, payload);
+		return new ResponseEntity<>(errorResponse, errorResponse.getStatus());
+	}
 }

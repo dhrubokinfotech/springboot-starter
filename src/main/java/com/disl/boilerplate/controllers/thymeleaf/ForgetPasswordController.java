@@ -1,5 +1,10 @@
 package com.disl.boilerplate.controllers.thymeleaf;
 
+import com.disl.boilerplate.constants.AppUtils;
+import com.disl.boilerplate.entities.User;
+import com.disl.boilerplate.models.requests.ForgetPassRequest;
+import com.disl.boilerplate.services.UserService;
+import io.swagger.v3.oas.annotations.Hidden;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -11,23 +16,16 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.disl.boilerplate.constants.AppUtils;
-import com.disl.boilerplate.entities.User;
-import com.disl.boilerplate.models.requests.ForgetPassRequest;
-import com.disl.boilerplate.services.UserService;
-
-import springfox.documentation.annotations.ApiIgnore;
-
-@ApiIgnore
+@Hidden
 @Controller
 public class ForgetPasswordController {
-	private final PasswordEncoder passwordEncoder;
-	public ForgetPasswordController(PasswordEncoder passwordEncoder) {
-		this.passwordEncoder = passwordEncoder;
-	}
+
 	@Autowired
-	UserService userService;
-	
+	private UserService userService;
+
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+
 	 @GetMapping(value = "resetpassword", produces = MediaType.TEXT_HTML_VALUE)
      public String resetPasswordHTML(Model model, @RequestParam(name = "passResetToken") String passResetToken) {
         if (passResetToken == null) {

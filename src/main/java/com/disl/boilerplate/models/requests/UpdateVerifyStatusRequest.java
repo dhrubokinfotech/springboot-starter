@@ -1,13 +1,13 @@
 package com.disl.boilerplate.models.requests;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 public class UpdateVerifyStatusRequest {
 
-    @ApiModelProperty(required = true)
+    @Schema(required = true)
     private long userId;
 
-    @ApiModelProperty(required = true)
+    @Schema(required = true)
     private boolean verify;
 
     public long getUserId() {

@@ -1,12 +1,11 @@
 package com.disl.boilerplate.models;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 
 public class Response {
 
-	private HttpStatusCode status;
+	private HttpStatus status;
 	private String message;
 	private Object payload;
 	private boolean success;
@@ -29,7 +28,7 @@ public class Response {
 
 	public Response() {}
 
-	public Response(HttpStatusCode status, boolean success, String message, Object payload) {
+	public Response(HttpStatus status, boolean success, String message, Object payload) {
 		super();
 		this.status = status;
 		this.success = success;
@@ -37,18 +36,18 @@ public class Response {
 		this.payload = payload;
 	}
 
-	public Response(HttpStatusCode status, boolean success, String message) {
+	public Response(HttpStatus status, boolean success, String message) {
 		super();
 		this.status = status;
 		this.success = success;
 		this.message = message;
 	}
 
-	public HttpStatusCode getStatus() {
+	public HttpStatus getStatus() {
 		return status;
 	}
 
-	public void setStatus(HttpStatusCode status) {
+	public void setStatus(HttpStatus status) {
 		this.status = status;
 	}
 

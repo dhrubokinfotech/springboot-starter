@@ -15,7 +15,6 @@ public class AppProperties {
 	private String activeProfile;
 
 	private String backEndUrl;
-	private String swaggerBackendUrl;
 
 	public environment getActiveProfile() {
 		if(environment.production.name().equals(activeProfile)) {
@@ -37,13 +36,5 @@ public class AppProperties {
 
 	public void setBackEndUrl(String backEndUrl) {
 		this.backEndUrl = backEndUrl;
-	}
-
-	public String getSwaggerBackendUrl() {
-		return swaggerBackendUrl;
-	}
-
-	public void setSwaggerBackendUrl(String swaggerBackendUrl) {
-		this.swaggerBackendUrl = swaggerBackendUrl;
 	}
 }

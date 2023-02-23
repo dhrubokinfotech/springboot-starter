@@ -24,15 +24,21 @@
 		<jjwt.version>0.11.5</jjwt.version>
 		<log4j.version>2.19.0</log4j.version>
 		<servlet.version>2.5</servlet.version>
-		<swagger.version>3.0.0</swagger.version>
+		<openapi.version>2.0.2</openapi.version>
 		<modelmapper.version>3.1.1</modelmapper.version>
-		<hibernate.validator.version>8.0.0.Final</hibernate.validator.version>
+		<hibernatevalidator.version>8.0.0.Final</hibernatevalidator.version>
 	</properties>
 
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+			<version>${openapi.version}</version>
 		</dependency>
 
 		<dependency>
@@ -98,7 +104,7 @@
 		<dependency>
 			<groupId>org.hibernate.validator</groupId>
 			<artifactId>hibernate-validator</artifactId>
-			<version>${hibernate.validator.version}</version>
+			<version>${hibernatevalidator.version}</version>
 		</dependency>
 
 		<dependency>
@@ -114,18 +120,6 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-thymeleaf</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>io.springfox</groupId>
-			<artifactId>springfox-swagger2</artifactId>
-			<version>${swagger.version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>io.springfox</groupId>
-			<artifactId>springfox-swagger-ui</artifactId>
-			<version>${swagger.version}</version>
 		</dependency>
 
 		<dependency>
