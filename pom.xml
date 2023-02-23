@@ -11,10 +11,10 @@
 		<relativePath />
 	</parent>
 	<groupId>com.disl</groupId>
-	<artifactId>boilerplate</artifactId>
+	<artifactId>starter</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>Boilerplate 1</name>
-	<description>Java Spring boot based boilerplate code with Spring Security, Swagger and Logging configured.</description>
+	<name>Spring Boot Starter</name>
+	<description>Java Spring boot based starter code with Spring Security, Swagger and Logging configured.</description>
 
 	<properties>
 		<java.version>17</java.version>
