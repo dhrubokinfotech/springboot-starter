@@ -1,8 +1,10 @@
 package com.disl.starter.services;
 
+import com.disl.starter.config.AppProperties;
 import com.disl.starter.constants.AppConstants;
 import com.disl.starter.constants.AppUtils;
 import com.disl.starter.entities.Role;
+import com.disl.starter.entities.Secret;
 import com.disl.starter.entities.User;
 import com.disl.starter.enums.RoleType;
 import com.disl.starter.exceptions.NotFoundException;
@@ -33,11 +35,22 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.*;
 
+import static com.disl.starter.enums.UserTokenPurpose.EMAIL_VERIFICATION;
+
 @Service
 public class UserService {
 
 	@Autowired
 	private RoleService roleService;
+
+	@Autowired
+	private MailService mailService;
+
+	@Autowired
+	private SecretService secretService;
+
+	@Autowired
+	private AppProperties appProperties;
 
 	@Autowired
 	private UserRepository userRepository;
@@ -213,13 +226,19 @@ public class UserService {
 		return userRepository.save(adminUser);
 	}
 
-	public User createUser(SignUpRequest request) {
+	public void createNewUser(SignUpRequest request) {
 		User userExists = userRepository.findTopByEmail(request.getEmail()).orElse(null);
 		if (userExists != null) {
 			throw new ResponseException("User with this email exists already. Please signin or try with different email");
 		}
 
+		String email = request.getEmail();
 		String password = request.getPassword();
+
+		if (!AppUtils.isValidMail(email)) {
+			throw new ResponseException(HttpStatus.EXPECTATION_FAILED, "Your email format is not correct.");
+		}
+
 		String invalidPasswordMessage = AppUtils.getInvalidPasswordMessage(password);
 		if (invalidPasswordMessage != null) {
 			throw new ResponseException(HttpStatus.BAD_REQUEST, invalidPasswordMessage);
@@ -232,7 +251,18 @@ public class UserService {
 
 		Role role = roleService.findRoleByNameWithException(AppConstants.userRole);
 		signedUser.setRoles(Set.of(role));
-		return userRepository.save(signedUser);
+		signedUser = userRepository.save(signedUser);
+
+		Secret secret = new Secret();
+		Long userId = signedUser.getId();
+		secret.setUserId(userId);
+
+		String token = UUID.randomUUID().toString();
+		secret.setUserToken(token);
+
+		mailService.sendMail(email, appProperties.getName() + " User Verification", "Please follow this link to verify your email for " + appProperties.getName() +". \n \t" + appProperties.getBackEndUrl() + AppConstants.VERIFICATION_SUBURL + token);
+		secret.setUserTokenPurpose(EMAIL_VERIFICATION);
+		secretService.saveSecret(secret);
 	}
 
 	public Page<User> getAllPaginatedUser(PaginationArgs paginationArgs) {

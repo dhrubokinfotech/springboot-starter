@@ -25,6 +25,7 @@ public final class SecurityConstants {
 			"/swagger-resources/**",
 			"/configuration/security",
 			"/webjars/**",
+			"/verify*",
 			"/api/oauth2/**",
 			"/api/refreshtoken",
 			"/api/db-file/id/**",

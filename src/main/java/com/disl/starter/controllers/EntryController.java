@@ -87,7 +87,7 @@ public class EntryController {
 	@ApiResponse(content = @Content(schema = @Schema(implementation = Response.class)), responseCode = "200")
 	@PostMapping(value = "/signup")
     public ResponseEntity<Response> createUser (@RequestBody SignUpRequest signUpRequest) {
-		userService.createUser(signUpRequest);
+		userService.createNewUser(signUpRequest);
 		return Response.getResponseEntity(true, "User Created. Please check your email address and verify your account");
     }
 
