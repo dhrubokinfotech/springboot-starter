@@ -15,7 +15,6 @@ import static com.disl.boilerplate.BoilerplateApplication.logger;
 @Component
 public class LoggingAspect {
 
-
     /**
      * Pointcut that matches all repositories, services and Web REST endpoints.
      */
