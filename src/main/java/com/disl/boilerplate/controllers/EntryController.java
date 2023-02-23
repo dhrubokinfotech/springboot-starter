@@ -73,12 +73,6 @@ public class EntryController {
 	@Autowired
 	private AuthUserInfoProviderURLFactory authUserInfoProviderURLFactory;
 
-//	@ApiOperation(value = "Sign-in")
-//	@ApiResponses(value = {
-//			@ApiResponse(code = 200, message = "Success", response = TokenResponse.class),
-//			@ApiResponse(code = 401, message = "Unauthorized", response = DefaultErrorResponse.class),
-//	})
-
 	@Operation(summary = "Sign-in")
 	@ApiResponse(content = @Content(schema = @Schema(implementation = TokenResponse.class)), responseCode = "200")
 	@PostMapping(value = "/signin")
@@ -89,9 +83,6 @@ public class EntryController {
 		);
     }
 
-//	@ApiOperation(value = "Sign Up")
-//	@ApiResponses(value = {@ApiResponse(code = 200, message = "Success", response = Response.class),@ApiResponse(code = 401, message = "Unauthorized"),@ApiResponse(code = 403, message="Forbidden"),@ApiResponse(code = 404, message = "Not Found"),@ApiResponse(code = 500, message = "Failure")})
-
 	@Operation(summary = "Sign Up")
 	@ApiResponse(content = @Content(schema = @Schema(implementation = Response.class)), responseCode = "200")
 	@PostMapping(value = "/signup")
@@ -99,12 +90,6 @@ public class EntryController {
 		userService.createUser(signUpRequest);
 		return Response.getResponseEntity(true, "User Created. Please check your email address and verify your account");
     }
-
-//	@ApiOperation(value = "Update banned status by admin manually", authorizations = {@Authorization(value = "jwtToken")})
-//	@ApiResponses(value = {
-//			@ApiResponse(code = 200, message = "Success", response = Response.class),
-//			@ApiResponse(code = 401, message = "Unauthorized", response = DefaultErrorResponse.class),
-//	})
 
 	@Operation(summary = "Update banned status by admin manually")
 	@ApiResponse(content = @Content(schema = @Schema(implementation = Response.class)), responseCode = "200")
@@ -127,12 +112,6 @@ public class EntryController {
 		}
 	}
 
-//	@ApiOperation(value = "Update verify status by admin manually", authorizations = {@Authorization(value = "jwtToken")})
-//	@ApiResponses(value = {
-//			@ApiResponse(code = 200, message = "Success", response = Response.class),
-//			@ApiResponse(code = 401, message = "Unauthorized", response = DefaultErrorResponse.class),
-//	})
-
 	@Operation(summary = "Update verify status by admin manually", security = @SecurityRequirement(name = "jwtToken"))
 	@ApiResponse(content = @Content(schema = @Schema(implementation = Response.class)), responseCode = "200")
 	@PreAuthorize("hasAuthority('USER_UPDATE')")
@@ -153,13 +132,6 @@ public class EntryController {
 			return Response.getResponseEntity(false, "Failed due to unknown reason. Please try again");
 		}
 	}
-
-//	@ApiOperation(value = "Get all users - paginated", authorizations = {@Authorization(value = "jwtToken")})
-//	@ApiImplicitParams({ @ApiImplicitParam(name = "parameters") })
-//	@ApiResponses(value = {
-//			@ApiResponse(code = 200, message = "Success", response = User.class, responseContainer = "List"),
-//			@ApiResponse(code = 401, message = "Unauthorized", response = DefaultErrorResponse.class),
-//	})
 
 	@Operation(summary = "Get all users - paginated", security = @SecurityRequirement(name = "jwtToken"))
 	@ApiResponse(content = @Content(array = @ArraySchema(schema = @Schema(implementation = User.class))), responseCode = "200")
@@ -182,12 +154,6 @@ public class EntryController {
 		);
 	}
 
-//	@ApiOperation(value = "Get user info", authorizations = { @Authorization(value="jwtToken") })
-//	@ApiResponses(value = {
-//			@ApiResponse(code = 200, message = "Success", response = User.class),
-//			@ApiResponse(code = 401, message = "Unauthorized", response = DefaultErrorResponse.class),
-//	})
-
 	@Operation(summary = "Get user info", security = @SecurityRequirement(name = "jwtToken"))
 	@ApiResponse(content = @Content(schema = @Schema(implementation = User.class)), responseCode = "200")
 	@GetMapping("/me")
@@ -197,12 +163,6 @@ public class EntryController {
 				userService.getUserInfo(userService)
 		);
 	}
-
-//	@ApiOperation(value = "Get user info by id", authorizations = { @Authorization(value="jwtToken") })
-//	@ApiResponses(value = {
-//			@ApiResponse(code = 200, message = "Success", response = User.class),
-//			@ApiResponse(code = 401, message = "Unauthorized", response = DefaultErrorResponse.class),
-//	})
 
 	@Operation(summary = "Get user info by id", security = @SecurityRequirement(name = "jwtToken"))
 	@ApiResponse(content = @Content(schema = @Schema(implementation = User.class)), responseCode = "200")
@@ -214,12 +174,6 @@ public class EntryController {
 		);
 	}
 
-//	@ApiOperation(value = "Update user profile information", authorizations = { @Authorization(value = "jwtToken") })
-//	@ApiResponses(value = {
-//			@ApiResponse(code = 200, message = "Success", response = Response.class),
-//			@ApiResponse(code = 401, message = "Unauthorized", response = DefaultErrorResponse.class),
-//	})
-
 	@Operation(summary = "Update user profile information", security = @SecurityRequirement(name = "jwtToken"))
 	@ApiResponse(content = @Content(schema = @Schema(implementation = User.class)), responseCode = "200")
 	@PutMapping("/user/info/update")
@@ -228,12 +182,6 @@ public class EntryController {
 		user.setName(updateUserInfoRequest.getName());
 		return Response.getResponseEntity(true, "User updated successfully!", userService.saveUser(user));
 	}
-
-//	@ApiOperation(value = "Admin user Creation")
-//	@ApiResponses(value = {
-//			@ApiResponse(code = 200, message = "Success", response = Response.class),
-//			@ApiResponse(code = 401, message = "Unauthorized", response = DefaultErrorResponse.class),
-//	})
 
 	@Operation(summary = "Admin user Creation", security = @SecurityRequirement(name = "jwtToken"))
 	@ApiResponse(content = @Content(schema = @Schema(implementation = User.class)), responseCode = "200")
@@ -246,12 +194,6 @@ public class EntryController {
 		);
 	}
 
-//	@ApiOperation(value = "Get user info", authorizations = { @Authorization(value="jwtToken") })
-//	@ApiResponses(value = {
-//			@ApiResponse(code = 200, message = "Success", response = User.class),
-//			@ApiResponse(code = 401, message = "Unauthorized", response = DefaultErrorResponse.class),
-//	})
-
 	@Operation(summary = "Update user from admin", security = @SecurityRequirement(name = "jwtToken"))
 	@ApiResponse(content = @Content(schema = @Schema(implementation = User.class)), responseCode = "200")
 	@PreAuthorize("hasAuthority('USER_UPDATE_FROM_ADMIN')")
@@ -263,12 +205,6 @@ public class EntryController {
 		);
 	}
 
-//	@ApiOperation(value = "Change password request", authorizations = {@Authorization(value = "jwtToken")})
-//	@ApiResponses(value = {
-//			@ApiResponse(code = 200, message = "Success", response = Response.class),
-//			@ApiResponse(code = 401, message = "Unauthorized", response = DefaultErrorResponse.class),
-//	})
-
 	@Operation(summary = "Change password request", security = @SecurityRequirement(name = "jwtToken"))
 	@ApiResponse(content = @Content(schema = @Schema(implementation = Response.class)), responseCode = "200")
 	@PreAuthorize("#request.email == authentication.name")
@@ -279,12 +215,6 @@ public class EntryController {
 				userService.changePassword(request)
 		);
 	}
-
-//	@ApiOperation(value = "Forget password Request")
-//	@ApiResponses(value = {
-//			@ApiResponse(code = 200, message = "Success", response = Response.class),
-//			@ApiResponse(code = 401, message = "Unauthorized", response = DefaultErrorResponse.class),
-//	})
 
 	@Operation(summary = "Forget password Request")
 	@ApiResponse(content = @Content(schema = @Schema(implementation = Response.class)), responseCode = "200")
@@ -312,13 +242,6 @@ public class EntryController {
 		}
 	}
 
-//	@ApiOperation(value = "Refresh Token")
-//	@ApiResponses(value = {@ApiResponse(code = 200, message = "Success", response = TokenResponse.class),
-//			@ApiResponse(code = 401, message = "Unauthorized"),
-//			@ApiResponse(code = 403, message="Forbidden"),
-//			@ApiResponse(code = 404, message = "Not Found"),
-//			@ApiResponse(code = 500, message = "Failure")})
-
 	@Operation(summary = "Refresh Token Request")
 	@ApiResponse(content = @Content(schema = @Schema(implementation = TokenResponse.class)), responseCode = "200")
 	@PostMapping(value = "/refreshtoken")
@@ -339,13 +262,6 @@ public class EntryController {
 				})
 				.orElseThrow(() -> new ResponseException(requestRefreshToken + " Refresh token is not in database!"));
 	}
-
-//	@ApiOperation(value = "OAuth2 SignIn/SignUp")
-//	@ApiResponses(value = {@ApiResponse(code = 200, message = "Success", response = TokenResponse.class),
-//			@ApiResponse(code = 401, message = "Unauthorized"),
-//			@ApiResponse(code = 403, message="Forbidden"),
-//			@ApiResponse(code = 404, message = "Not Found"),
-//			@ApiResponse(code = 500, message = "Failure")})
 
 	@Operation(summary = "OAuth2 SignIn/SignUp")
 	@ApiResponse(content = @Content(schema = @Schema(implementation = TokenResponse.class)), responseCode = "200")
