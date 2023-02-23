@@ -1,5 +1,6 @@
 package com.disl.starter.controllers.thymeleaf;
 
+import com.disl.starter.config.AppProperties;
 import com.disl.starter.constants.AppUtils;
 import com.disl.starter.entities.User;
 import com.disl.starter.models.requests.ForgetPassRequest;
@@ -24,6 +25,9 @@ public class ForgetPasswordController {
 	private UserService userService;
 
 	@Autowired
+	private AppProperties appProperties;
+
+	@Autowired
 	private PasswordEncoder passwordEncoder;
 
 	 @GetMapping(value = "resetpassword", produces = MediaType.TEXT_HTML_VALUE)
@@ -43,8 +47,8 @@ public class ForgetPasswordController {
 	 	ForgetPassRequest forgetPassRequest = new ForgetPassRequest();
 	 	forgetPassRequest.setToken(passResetToken);
 	 	model.addAttribute("passChnReq", forgetPassRequest);
+	 	model.addAttribute("projectName", appProperties.getName());
 	 	return "password-change";
-   
 	  }
 	 
 	 @PostMapping(value = "pass-reset", produces = MediaType.TEXT_HTML_VALUE)
@@ -52,10 +56,12 @@ public class ForgetPasswordController {
 	            Model model) {
 		User user = userService.findByPasswordResetToken(forgetPassRequest.getToken()); 	
 	 	if (user == null) {
+			model.addAttribute("projectName", appProperties.getName());
 	 		model.addAttribute("message", "User-token mismatch.");
 	 		return "dispatchMessage";
 	 	} 
 	 	if (!forgetPassRequest.getPass1().equals(forgetPassRequest.getPass2())) {
+			model.addAttribute("projectName", appProperties.getName());
 	 		model.addAttribute("message", "Passwords are not same.");
 	 		return "dispatchMessage";
 	 	}
@@ -66,8 +72,11 @@ public class ForgetPasswordController {
 	 		user.setPassword(passwordEncoder.encode(forgetPassRequest.getPass1()));
 	 		user.setPasswordResetToken(null);
 	 		userService.saveUser(user);
+
+			model.addAttribute("projectName", appProperties.getName());
 	 		model.addAttribute("message", "Password Changed Successfully.");
 		} else {
+			model.addAttribute("projectName", appProperties.getName());
 	 		model.addAttribute("message", invalidPasswordMessage);
 		}
 

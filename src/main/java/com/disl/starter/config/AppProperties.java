@@ -14,6 +14,7 @@ public class AppProperties {
 	@Value("${spring.profiles.active}")
 	private String activeProfile;
 
+	private String name;
 	private String backEndUrl;
 
 	public environment getActiveProfile() {
@@ -36,5 +37,13 @@ public class AppProperties {
 
 	public void setBackEndUrl(String backEndUrl) {
 		this.backEndUrl = backEndUrl;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 }

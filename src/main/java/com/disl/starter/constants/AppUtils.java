@@ -177,20 +177,19 @@ public final class AppUtils {
 			return "Password can't be empty";
 		}
 
-		if(password.length() <= 7) {
-			return "Password must have 8 or more characters long";
-		}
-
 		if(password.contains(" ")) {
 			return "Password shouldn't contains white spaces";
 		}
 
-		Pattern digitPattern = Pattern.compile("[0-9]");
-		Pattern specialCharacterPattern = Pattern.compile("[0-9_\\/\\s,.-]+");
+		if(password.length() <= 7) {
+			return "Password must have 8 or more characters long";
+		}
 
-		boolean isMatched = digitPattern.matcher(password).matches() && specialCharacterPattern.matcher(password).matches();
+		Pattern specialAndDigitPattern = Pattern.compile("^(?=.*\\d)(?=.*[a-zA-Z])(?=.*[\\W_]).{3,}$");
+		boolean isMatched = specialAndDigitPattern.matcher(password).matches();
+
 		if(!isMatched) {
-			return "Password must have minimum a digit and an special character";
+			return "Password must have minimum a digit, a special character and an alphabet";
 		}
 
 		return null;
