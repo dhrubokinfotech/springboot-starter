@@ -6,30 +6,17 @@ import com.disl.starter.models.AuditModel;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = AppTables.pageName)
+@Table(name = AppTables.PAGE_NAME)
 public class Page extends AuditModel<String> {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = PageTable.id, nullable = false, updatable = false, unique = true)
-    private Long id;
-
-    @Column(name = PageTable.tag)
+    @Column(name = PageTable.TAG)
     private String tag;
 
-    @Column(name = PageTable.title)
+    @Column(name = PageTable.TITLE)
     private String title;
 
-    @Column(name = PageTable.description, columnDefinition = "Text")
+    @Column(name = PageTable.DESCRIPTION, columnDefinition = "Text")
     private String description;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getTag() {
         return tag;
@@ -54,5 +41,4 @@ public class Page extends AuditModel<String> {
     public void setDescription(String description) {
         this.description = description;
     }
-
 }

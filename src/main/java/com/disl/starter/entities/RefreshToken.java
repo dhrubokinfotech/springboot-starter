@@ -1,35 +1,26 @@
 package com.disl.starter.entities;
 
+import com.disl.starter.constants.AppTables;
+import com.disl.starter.constants.AppTables.RefreshTokenTable;
 import com.disl.starter.models.AuditModel;
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 
 import java.time.Instant;
 
 @Entity
-@Table(name = "REFRESH_TOKEN")
+@Table(name = AppTables.REFRESH_TOKEN_NAME)
 public class RefreshToken extends AuditModel<String> {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "REFRESH_TOKEN")
-    private long id;
-
-    @Column(name = "USER_ID")
+    @Column(name = RefreshTokenTable.USER_ID)
     private Long userId;
 
-    @Column(name = "TOKEN")
+    @Column(name = RefreshTokenTable.TOKEN)
     private String token;
 
-    @Column(name = "EXPIRY_TIME", nullable = false)
+    @Column(name = RefreshTokenTable.EXPIRY_TIME, nullable = false)
     private Instant expiryDate;
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
 
     public Long getUserId() {
         return userId;

@@ -9,28 +9,23 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = AppTables.notificationName)
+@Table(name = AppTables.NOTIFICATION_NAME)
 public class Notification extends AuditModel<String> {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = NotificationTable.id, unique = true, nullable = false, updatable = false)
-    private Long id;
-
-    @Column(name = NotificationTable.title)
+    @Column(name = NotificationTable.TITLE)
     private String title;
 
-    @Column(name = NotificationTable.message, columnDefinition = "TEXT")
+    @Column(name = NotificationTable.MESSAGE, columnDefinition = "TEXT")
     private String message;
 
-    @Column(name = NotificationTable.typeID)
+    @Column(name = NotificationTable.TYPE_ID)
     private Long typeId = 0L;
 
-    @Column(name = NotificationTable.isRead)
+    @Column(name = NotificationTable.IS_READ)
     private Boolean isRead = false;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = NotificationTable.type)
+    @Column(name = NotificationTable.TYPE)
     private NotificationType type;
 
     @JsonIgnoreProperties(ignoreUnknown = true, value = {
@@ -39,7 +34,7 @@ public class Notification extends AuditModel<String> {
             "roles", "lastModifiedDateTimeStamp", "lastModifiedBy",
     })
     @ManyToOne
-    @JoinColumn(name = NotificationTable.senderId)
+    @JoinColumn(name = NotificationTable.SENDER_ID)
     private User sender;
 
     @JsonIgnoreProperties(ignoreUnknown = true, value = {
@@ -48,7 +43,7 @@ public class Notification extends AuditModel<String> {
             "roles", "lastModifiedDateTimeStamp", "lastModifiedBy",
     })
     @ManyToOne
-    @JoinColumn(name = NotificationTable.recipientId)
+    @JoinColumn(name = NotificationTable.RECIPIENT_ID)
     private User recipient;
 
     public String getTitle() {
@@ -65,14 +60,6 @@ public class Notification extends AuditModel<String> {
 
     public void setType(NotificationType type) {
         this.type = type;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getMessage() {

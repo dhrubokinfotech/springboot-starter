@@ -10,11 +10,6 @@ import java.time.Instant;
 @Table(name = "SECRETS")
 public class Secret extends AuditModel<String> {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "ID")
-    private long id;
-
     @Column(name = "GOOGLE_ACCESS_TOKEN")
     private String googleAccessToken;
 
@@ -32,14 +27,6 @@ public class Secret extends AuditModel<String> {
     private UserTokenPurpose userTokenPurpose;
 
     private Long userId;
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
 
     public String getGoogleAccessToken() {
         return googleAccessToken;
