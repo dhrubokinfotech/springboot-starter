@@ -1,8 +1,8 @@
 package com.disl.starter.models;
 
+import com.disl.starter.constants.AppTables.AuditModelTable;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import jakarta.persistence.EntityListeners;
-import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.*;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
@@ -16,19 +16,36 @@ import java.time.OffsetDateTime;
 @EntityListeners(AuditingEntityListener.class)
 public abstract class AuditModel<U> {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = AuditModelTable.ID)
+	private Long id;
+
 	@CreatedBy
+	@Column(name = AuditModelTable.CREATED_BY)
 	protected U createdBy;
 
+	@LastModifiedBy
+	@Column(name = AuditModelTable.LAST_MODIFIED_BY)
+	protected U lastModifiedBy;
+
 	@CreatedDate
+	@Column(name = AuditModelTable.CREATION_DATE)
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
 	protected LocalDateTime creationDate;
 
-	@LastModifiedBy
-	protected U lastModifiedBy;
-
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
 	@LastModifiedDate
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
+	@Column(name = AuditModelTable.LAST_MODIFIED_DATE)
 	protected LocalDateTime lastModifiedDate;
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
 
 	@JsonFormat(shape=JsonFormat.Shape.NUMBER, pattern="s")
 	public Long getCreationDateTimeStamp() {

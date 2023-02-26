@@ -11,15 +11,10 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = AppTables.user)
+@Table(name = AppTables.USER_NAME)
 public class User extends AuditModel<String> {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = UserTable.id)
-	private long id;
-
-	@Column(name = UserTable.email, nullable = false, unique = true)
+	@Column(name = UserTable.EMAIL, nullable = false, unique = true)
 	private String email;
 
 	@Column(name = UserTable.password)
@@ -27,33 +22,25 @@ public class User extends AuditModel<String> {
 	@Size(max = 120)
 	private String password;
 
-	@Column(name = UserTable.passwordResetToken)
+	@Column(name = UserTable.PASSWORD_RESET_TOKEN)
 	private String passwordResetToken;
 
-	@Column(name = UserTable.name)
+	@Column(name = UserTable.NAME)
 	private String name;
 
-	@Column (name = UserTable.verified)
+	@Column (name = UserTable.VERIFIED)
 	private Boolean verified = false;
 
-	@Column (name = UserTable.banned)
+	@Column (name = UserTable.BANNED)
 	private Boolean banned = false;
 
 	@JoinTable(
-		name = AppTables.userRole,
-		joinColumns = @JoinColumn(name = "user_id"),
-		inverseJoinColumns = @JoinColumn(name = AppTables.RoleTable.roleId)
+		name = AppTables.USER_ROLE_NAME,
+		joinColumns = @JoinColumn(name = UserTable.USER_ID),
+		inverseJoinColumns = @JoinColumn(name = UserTable.ROLE_ID)
 	)
 	@ManyToMany(fetch = FetchType.EAGER)
 	private Set<Role> roles = new HashSet<>();
-
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
 
 	public String getEmail() {
 		return email;

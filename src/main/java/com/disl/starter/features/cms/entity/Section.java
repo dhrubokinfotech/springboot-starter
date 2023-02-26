@@ -7,43 +7,30 @@ import com.disl.starter.models.AuditModel;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = AppTables.sectionName)
+@Table(name = AppTables.SECTION_NAME)
 public class Section extends AuditModel<String> {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = SectionTable.id, nullable = false, updatable = false, unique = true)
-    private Long id;
-
-    @Column(name = SectionTable.title)
+    @Column(name = SectionTable.TITLE)
     private String title;
 
-    @Column(name = SectionTable.description, columnDefinition = "Text")
+    @Column(name = SectionTable.DESCRIPTION, columnDefinition = "Text")
     private String description;
 
-    @Column(name = SectionTable.externalLink, columnDefinition = "Text")
+    @Column(name = SectionTable.EXTERNAL_LINK, columnDefinition = "Text")
     private String externalLink;
 
-    @Column(name = SectionTable.content, columnDefinition = "Text")
+    @Column(name = SectionTable.CONTENT, columnDefinition = "Text")
     private String content;
 
-    @Column(name = SectionTable.pageId)
+    @Column(name = SectionTable.PAGE_ID)
     private Long pageId;
 
-    @Column(name = SectionTable.active)
+    @Column(name = SectionTable.ACTIVE)
     private Boolean active = true;
 
     @ManyToOne
-    @JoinColumn(name = SectionTable.imageFileId)
+    @JoinColumn(name = SectionTable.IMAGE_FILE_ID)
     private DbFile dbFile;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getTitle() {
         return title;

@@ -9,41 +9,29 @@ import jakarta.persistence.*;
 import java.util.Collection;
 
 @Entity
-@Table(name = AppTables.role)
+@Table(name = AppTables.ROLE_NAME)
 public class Role extends AuditModel<String> {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = RoleTable.roleId)
-	private Long id;
 
-	@Column(name = RoleTable.roleName)
+	@Column(name = RoleTable.ROLE_NAME)
 	private String roleName;
 
 	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
 	@JoinTable(
-			name = AppTables.rolePrivilege,
-			joinColumns = @JoinColumn(name = "role_id"),
-			inverseJoinColumns = @JoinColumn(name = "privilege_id")
+			name = AppTables.ROLE_PRIVILEGE_NAME,
+			joinColumns = @JoinColumn(name = RoleTable.ROLE_ID),
+			inverseJoinColumns = @JoinColumn(name = RoleTable.PRIVILEGE_ID)
 	)
 	private Collection<Privilege> privileges;
 
-	@Column(name = RoleTable.roleType)
+	@Column(name = RoleTable.ROLE_TYPE)
 	@Enumerated(EnumType.STRING)
 	private RoleType roleType;
 
-	@Column(name = RoleTable.description, columnDefinition="TEXT")
+	@Column(name = RoleTable.DESCRIPTION, columnDefinition="TEXT")
 	private String description;
 
-	@Column(name = RoleTable.imageUrl)
+	@Column(name = RoleTable.IMAGE_URL)
 	private String imageUrl;
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
 
 	public String getRoleName() {
 		return roleName;

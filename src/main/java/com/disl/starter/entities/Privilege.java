@@ -6,27 +6,14 @@ import com.disl.starter.models.AuditModel;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = AppTables.privilege)
+@Table(name = AppTables.PRIVILEGE_NAME)
 public class Privilege extends AuditModel<String> {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = PrivilegeTable.id)
-	private long id;
-	
-	@Column(name = PrivilegeTable.name)
+	@Column(name = PrivilegeTable.NAME)
 	private String name;
 	
-	@Column(name = PrivilegeTable.descName)
+	@Column(name = PrivilegeTable.DESC_NAME)
 	private String descName;
-
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
 
 	public String getName() {
 		return name;
