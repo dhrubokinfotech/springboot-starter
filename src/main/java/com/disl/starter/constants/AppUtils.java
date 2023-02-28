@@ -118,7 +118,9 @@ public final class AppUtils {
 		try {
 			Object principal = authentication.getPrincipal();
 
-			if (principal instanceof CustomUserDetails customUserDetails) {
+			if (principal instanceof CustomUserDetails) {
+				CustomUserDetails customUserDetails = (CustomUserDetails) principal;
+
 				user = new User();
 				user.setId(customUserDetails.getId());
 				user.setName(customUserDetails.getName());
