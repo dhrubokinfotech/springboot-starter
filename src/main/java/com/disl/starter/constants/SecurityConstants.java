@@ -32,4 +32,26 @@ public final class SecurityConstants {
 			"/api/page/tag/**",
 			"/api/page/predefine-tags",
 	};
+
+	public static final String[] FormDisabledAntMatchers = {
+			"/static/**",
+			"/**",
+			"/error/**",
+			"/swagger-ui/**",
+			"/api-docs/**",
+			"/verify/**",
+			"/v2/api-docs",
+			"/configuration/ui",
+			"/swagger-resources/**",
+			"/configuration/security",
+			"/swagger-ui.html",
+			"/webjars/**",
+			"/images/**",
+			"/build/**",
+			"/dist/**",
+			"/docs/**",
+			"/pages/**",
+			"/plugins/**",
+			"/login/**",
+	};
 }

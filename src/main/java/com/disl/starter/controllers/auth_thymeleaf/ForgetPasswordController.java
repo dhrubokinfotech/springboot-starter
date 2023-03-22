@@ -1,4 +1,4 @@
-package com.disl.starter.controllers.thymeleaf;
+package com.disl.starter.controllers.auth_thymeleaf;
 
 import com.disl.starter.config.AppProperties;
 import com.disl.starter.constants.AppUtils;
