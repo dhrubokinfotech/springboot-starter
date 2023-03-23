@@ -72,27 +72,25 @@ public class SecurityConfig {
         http
                 .cors().and().csrf().disable()
                 .securityMatcher("/**").authorizeHttpRequests()
-                .requestMatchers(SecurityConstants.FormDisabledAntMatchers)
-                .permitAll()
-                .anyRequest().authenticated()
-                .and()
+                .requestMatchers(SecurityConstants.FormDisabledAntMatchers).permitAll()
+                .anyRequest().authenticated().and()
                 .formLogin()
-                .loginPage("/login")
-                .failureUrl("/login?error=true")
-                .successHandler(customSuccessHandler)
+                    .loginPage("/login")
+                    .failureUrl("/login?error=true")
+                    .successHandler(customSuccessHandler)
                 .and()
                 .rememberMe()
-                .tokenValiditySeconds((int) TimeUnit.DAYS.toSeconds(21))
-                .key(SecurityConstants.SECRET)
-                .rememberMeParameter("remember-me")
+                    .tokenValiditySeconds((int) SecurityConstants.SESSION_TOKEN_EXPIRATION_TIME)
+                    .key(SecurityConstants.SECRET).rememberMeParameter("remember-me")
                 .and()
                 .logout()
-                .logoutUrl("/logout")
-                .logoutRequestMatcher(new AntPathRequestMatcher("/logout", "GET"))
+                    .logoutUrl("/logout")
+                    .logoutRequestMatcher(new AntPathRequestMatcher("/logout", "GET"))
+                    .logoutSuccessUrl("/login")
                 .clearAuthentication(true)
                 .invalidateHttpSession(true)
-                .deleteCookies("JSESSIONID", "remember-me")
-                .logoutSuccessUrl("/login");
+                .deleteCookies("JSESSIONID", "remember-me");
+
         return http.build();
     }
 
