@@ -6,7 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 
-public class SecurityExceptionHandlingController implements AuthenticationFailureHandler{
+public class SecurityExceptionHandlingController implements AuthenticationFailureHandler {
 
 	@Override
 	public void onAuthenticationFailure(

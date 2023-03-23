@@ -18,7 +18,7 @@ public class AuthenticationExceptionHandler implements AuthenticationEntryPoint,
 	@Override
 	public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException {
 		ObjectMapper mapper = new ObjectMapper();
-		Response errorResponse = new Response(HttpStatus.FORBIDDEN, false, authException.getLocalizedMessage(), null);
+		Response errorResponse = new Response(HttpStatus.FORBIDDEN, false, "(JWT) " + authException.getMessage(), null);
 
 		String responseMsg = mapper.writeValueAsString(errorResponse);
 		response.getWriter().write(responseMsg);

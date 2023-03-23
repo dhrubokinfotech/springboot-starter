@@ -21,14 +21,15 @@ import org.springframework.web.bind.MissingPathVariableException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import java.sql.SQLException;
 import java.util.Optional;
 
 @Hidden
-@Order(Ordered.HIGHEST_PRECEDENCE)
 @ControllerAdvice
 public class ExceptionHandlingController extends ResponseEntityExceptionHandler {
 
