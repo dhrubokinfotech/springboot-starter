@@ -38,7 +38,6 @@ public final class SecurityConstants {
 
 	public static final String[] FormDisabledAntMatchers = {
 			"/static/**",
-			"/**",
 			"/error/**",
 			"/swagger-ui/**",
 			"/api-docs/**",
