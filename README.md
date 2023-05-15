@@ -3,11 +3,11 @@ Java Spring Boot based boilerplate starter application with Spring Security (JWT
 
 ## How to use/modify this project
 
-**Step 1:** Open the project in ```Intellij Idea``` or any other Java (Spring) supported IDE. Right-click on the project's root folder then rename the project by navigating ```project_root/Refactor/Rename```
+**Step 1:**  Clone and open the project in ```Intellij Idea``` or any other Java (Spring) supported IDE. Right-click on the project's root folder then rename the project by navigating ```project_root/Refactor/Rename```
 
 ![1](https://github.com/dhrubokinfotech/springboot-starter/assets/26526539/ab06fc6a-c3f1-4683-9191-6b7a742d31a9)
 
-**Step 2:** Clone and open your project from your file system then rename the project folder name
+**Step 2:** Open your project from your file system then rename the project folder name
 
 ![2](https://github.com/dhrubokinfotech/springboot-starter/assets/26526539/e603e8d8-92d0-42fa-b00b-d93ab6ffbe6c)
 
