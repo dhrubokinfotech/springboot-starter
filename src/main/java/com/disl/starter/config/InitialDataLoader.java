@@ -46,7 +46,7 @@ public class InitialDataLoader implements ApplicationListener<ApplicationContext
 			}
 		}
 
-		if(checkIfPrivilegeExist(AppConstants.INITIAL_ROLE)) {
+		if(checkIfRoleExist(AppConstants.INITIAL_ROLE)) {
 			Role superAdminRole = roleService.findRoleByName(AppConstants.INITIAL_ROLE);
 			superAdminRole.getPrivileges().addAll(superAdminPrivileges);
 			roleService.saveRole(superAdminRole);
